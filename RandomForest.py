@@ -13,7 +13,8 @@ plt.xlabel('Legitimate (0) vs Phishing (1) ')
 plt.ylabel('Count')
 plt.show()
 
-features = ['qty_dot_url', 'qty_hyphen_url', 'url_google_index']
+#features = ['qty_dot_url', 'qty_hyphen_url', 'url_google_index']
+features = df.columns[:-1]
 x = df[features]
 y = df['phishing']
 
@@ -39,9 +40,9 @@ plt.figure(figsize=(12, 6))
 for i, metric in enumerate(metrics, 1):
     plt.subplot(1, 3, i)
     sns.barplot(x=df_report.index[:-3], y=metric, data=df_report[:-3])
-    plt.title(f'{metric.capitalize()} by Class')
+    plt.title(f'{metric.capitalize()}')
     plt.ylim(0, 1)
-    plt.xlabel('Class')
+    plt.xlabel('Legitimate (0) vs Phishing (1)')
     plt.ylabel(metric.capitalize())
 plt.tight_layout()
 plt.show()
