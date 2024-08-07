@@ -1,31 +1,22 @@
 from openai import OpenAI
+import json
+import os
+from email import policy
+from email.parser import BytesParser
 
 client = OpenAI()
 
 
+# Function to create prompt
 def query_llm(prompt):
     completion = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are an email spam detector."},
             {"role": "user", "content": prompt}
-        ],
-        functions=[{
-            "name": "print_phishing_result",
-            "description": "Outputs whether a given email is a phishing email or a legitimate email.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "is_phishing": {"type": "boolean"},
-                    "phishing_score": {"type": "integer"},
-                    "brand_impersonated": {"type": "string"},
-                    "rationales": {"type": "string"},
-                    "brief_reason": {"type": "string"}
-                }
-            }
-        }]
+        ]
     )
-    return completion
+    return completion.choices[0].message.content
 
 
 def generate_prompt(headers, body):
@@ -47,5 +38,29 @@ def generate_prompt(headers, body):
 
     {body}'''
     """
+    return prompt_template.format(headers=json.dumps(headers, indent=2), body=body)
 
-    return prompt_template.format(headers=headers, body=body)
+
+# Function to parse .eml file
+def parse_eml(file_path):
+    with open(file_path, 'rb') as f:
+        msg = BytesParser(policy=policy.default).parse(f)
+    headers = dict(msg.items())
+    body = msg.get_body(preferencelist=('plain', 'html')).get_content()
+    return headers, body
+
+
+# Path to the .eml file
+file_path = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\phishing_pot-main\email\sample-1.eml'
+
+# Parse the .eml file
+headers, body = parse_eml(file_path)
+
+# Generate the prompt
+prompt = generate_prompt(headers, body)
+
+# Query the LLM with the generated prompt
+response = query_llm(prompt)
+
+# Print the response
+print(json.dumps(response, indent=2))
