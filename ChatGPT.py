@@ -7,10 +7,9 @@ from email.parser import BytesParser
 client = OpenAI()
 
 
-# Function to create prompt
 def query_llm(prompt):
     completion = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are an email spam detector."},
             {"role": "user", "content": prompt}
@@ -18,7 +17,7 @@ def query_llm(prompt):
     )
     return completion.choices[0].message.content
 
-
+# Function to create prompt
 def generate_prompt(headers, body):
     prompt_template = """
         I want you to act as a spam detector to determine whether a given email is a phishing email or a legitimate email. Your analysis should be thorough and evidence-based. Phishing emails often impersonate legitimate brands and use social engineering techniques to deceive users. These techniques include, but are not limited to: fake rewards, fake warnings about account problems, and creating a sense of urgency or interest. Spoofing the sender address and embedding deceptive HTML links are also common tactics. Analyze the email by following these steps:
