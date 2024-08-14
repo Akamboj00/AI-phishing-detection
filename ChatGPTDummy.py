@@ -85,34 +85,55 @@ def parse_eml(file_path):
     body = msg.get_body(preferencelist=('plain', 'html')).get_content()
     return headers, body
 
+def process_eml_files_in_directory(directory_path, output_file):
+    """
+    Process all .eml files in the specified directory and save the results.
+
+    Args:
+    directory_path (str): Path to the directory containing .eml files.
+    output_file (str): Path to the output JSON file.
+    """
+    results = []
+    for filename in os.listdir(directory_path):
+        if filename.endswith(".eml"):
+            file_path = os.path.join(directory_path, filename)
+            print(f"Processing file: {file_path}")
+
+            try:
+                headers, body = parse_eml(file_path)
+                prompt = generate_prompt(headers, body)
+                response = query_llm(prompt)
+                results.append({
+                    "file": filename,
+                    "response": response
+                })
+            except Exception as e:
+                print(f"Failed to process {file_path}: {e}")
+                results.append({
+                    "file": filename,
+                    "error": str(e)
+                })
+
+    # Save results to the output file
+    with open(output_file, 'w') as f:
+        json.dump(results, f, indent=2)
+    print(f"Results saved to {output_file}")
+
 def main():
-    """
-    Main function to execute the script.
-    """
-    # Path to the .eml file
-    file_path = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\phishing_pot-main\email\sample-1.eml'
+    # Path to the directory containing .eml files
+    directory_path = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\testing\phishing_pot-main\combined'
 
-    # Validate file path
-    if not os.path.exists(file_path):
-        print(f"File not found: {file_path}")
+    # Output file to save results
+    output_file = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\Output\testing\results.json'
+
+
+    # Validate directory path
+    if not os.path.exists(directory_path):
+        print(f"Directory not found: {directory_path}")
         return
 
-    # Parse the .eml file
-    try:
-        headers, body = parse_eml(file_path)
-    except Exception as e:
-        print(f"Failed to parse .eml file: {e}")
-        return
-
-    # Generate the prompt
-    prompt = generate_prompt(headers, body)
-
-    # Query the LLM with the generated prompt
-    try:
-        response = query_llm(prompt)
-        print(json.dumps(response, indent=2))
-    except Exception as e:
-        print(f"Failed to query the LLM: {e}")
+    # Process all .eml files in the directory
+    process_eml_files_in_directory(directory_path, output_file)
 
 if __name__ == "__main__":
     main()
