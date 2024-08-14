@@ -4,6 +4,7 @@ from email import policy
 from email.parser import BytesParser
 from unittest.mock import Mock
 from openai import OpenAI
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 # Initialize OpenAI client
 client = OpenAI()
@@ -57,7 +58,14 @@ def parse_eml(file_path):
     body = msg.get_body(preferencelist=('plain', 'html')).get_content()
     return headers, body
 
-def process_eml_files_in_directory(directory_path, label, results, start_count):
+def extract_label_from_response(response):
+    # A simple check to determine if the response indicates phishing or legitimate
+    if "phishing" in response.lower():
+        return "phishing"
+    else:
+        return "legitimate"
+
+def process_eml_files_in_directory(directory_path, label, results, start_count, true_labels, predicted_labels):
     count = start_count  # Start the counter from the provided start_count value
     print(f"Processing directory: {directory_path}")
     for filename in os.listdir(directory_path):
@@ -68,10 +76,14 @@ def process_eml_files_in_directory(directory_path, label, results, start_count):
             headers, body = parse_eml(file_path)
             prompt = generate_prompt(headers, body)
             response = query_llm(prompt)
+            predicted_label = extract_label_from_response(response)
+            true_labels.append(label)
+            predicted_labels.append(predicted_label)
             results.append({
                 "result_id": count,  # Add the counter as the result_id
                 "file": filename,
                 "label": label,
+                "predicted_label": predicted_label,
                 "response": response
             })
             count += 1  # Increment the counter after each file
@@ -81,11 +93,20 @@ def process_eml_files_in_directory(directory_path, label, results, start_count):
                 "result_id": count,  # Add the counter even in case of an error
                 "file": filename,
                 "label": label,
+                "predicted_label": "error",
                 "error": str(e)
             })
             count += 1  # Increment the counter even if there's an error
 
     return count  # Return the current count
+
+def calculate_metrics(true_labels, predicted_labels):
+    accuracy = accuracy_score(true_labels, predicted_labels)
+    precision = precision_score(true_labels, predicted_labels, pos_label="phishing")
+    recall = recall_score(true_labels, predicted_labels, pos_label="phishing")
+    f1 = f1_score(true_labels, predicted_labels, pos_label="phishing")
+    report = classification_report(true_labels, predicted_labels, labels=["phishing", "legitimate"])
+    return accuracy, precision, recall, f1, report
 
 def main():
     phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\testing\phishing_pot-main\combined\phishing_emails'
@@ -94,14 +115,24 @@ def main():
     # Output file to save results
     output_file = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\Output\testing\results.json'
 
-    # Initialize results list
+    # Initialize results list and label lists
     results = []
+    true_labels = []
+    predicted_labels = []
 
     # Process phishing emails
-    count = process_eml_files_in_directory(phishing_dir, label="phishing", results=results, start_count=1)
+    count = process_eml_files_in_directory(phishing_dir, label="phishing", results=results, start_count=1, true_labels=true_labels, predicted_labels=predicted_labels)
 
     # Process legitimate emails
-    process_eml_files_in_directory(legitimate_dir, label="legitimate", results=results, start_count=count)
+    process_eml_files_in_directory(legitimate_dir, label="legitimate", results=results, start_count=count, true_labels=true_labels, predicted_labels=predicted_labels)
+
+    # Calculate metrics
+    accuracy, precision, recall, f1, report = calculate_metrics(true_labels, predicted_labels)
+    print(f"Accuracy: {accuracy:.2f}")
+    print(f"Precision: {precision:.2f}")
+    print(f"Recall: {recall:.2f}")
+    print(f"F1 Score: {f1:.2f}")
+    print("\nClassification Report:\n", report)
 
     # Save results to the output file
     with open(output_file, 'w') as f:
