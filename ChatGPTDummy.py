@@ -14,7 +14,10 @@ client.chat.completions.create = Mock(return_value={
     "choices": [
         {
             "message": {
-                "content": "This is a simulated response. The email appears to be a phishing attempt because it uses urgent language and requests personal information."
+                "content": json.dumps({
+                    "is_phishing": 1,  # Simulated value indicating phishing
+                    "analysis": "This email uses urgent language and requests personal information, typical of phishing attempts."
+                }, indent=2)  # Adding indentation for pretty formatting
             }
         }
     ]
@@ -42,7 +45,12 @@ def generate_prompt(headers, body):
 
     4. Provide a comprehensive evaluation of the email, highlighting specific elements that support your conclusion. Include a detailed explanation of any phishing or legitimacy indicators found in the email.
 
-    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered.
+    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered. Return the result using the following format:
+
+    {{
+        "is_phishing": 1, # Use 1 if the email is phishing, 0 if it is legitimate
+        "analysis": "Provide a brief explanation of your decision here."
+    }}
 
     Email:
     '''{headers}
@@ -59,11 +67,17 @@ def parse_eml(file_path):
     return headers, body
 
 def extract_label_from_response(response):
-    # A simple check to determine if the response indicates phishing or legitimate
-    if "phishing" in response.lower():
-        return "phishing"
-    else:
-        return "legitimate"
+    try:
+        response_json = json.loads(response)
+        is_phishing = response_json.get("is_phishing")
+        if is_phishing == 1:
+            return "phishing"
+        elif is_phishing == 0:
+            return "legitimate"
+        else:
+            return "uncertain"  # Handle unexpected values
+    except json.JSONDecodeError:
+        return "error"  # Handle cases where the response is not valid JSON
 
 def process_eml_files_in_directory(directory_path, label, results, start_count, true_labels, predicted_labels):
     count = start_count  # Start the counter from the provided start_count value
