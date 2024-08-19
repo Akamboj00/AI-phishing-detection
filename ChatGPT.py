@@ -36,11 +36,6 @@ def generate_prompt(headers, body):
         "is_phishing": 1, # Use 1 if the email is phishing, 0 if it is legitimate
         "analysis": "Provide a brief explanation of your decision here."
     }}
-
-    Email:
-    '''{headers}
-
-    {body}'''
     """
     return prompt_template.format(headers=json.dumps(headers, indent=2), body=body)
 
