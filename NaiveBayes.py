@@ -30,14 +30,19 @@ nb_model.fit(x_train, y_train)
 # Make predictions
 y_pred = nb_model.predict(x_test)
 
-# Calculate accuracy and generate classification report
+# Calculate accuracy
 accuracy = accuracy_score(y_test, y_pred)
 
+# Generate classification report
 report = classification_report(y_test, y_pred, output_dict=True)
-print(report)
 
 # Convert the classification report to a DataFrame
 df_report = pd.DataFrame(report).transpose()
+
+# Display the classification report as a well-formatted table
+print("Classification Report:\n", df_report)
+
+print(f"\nAccuracy: {accuracy:.2f}")
 
 # Plot the metrics
 metrics = ['precision', 'recall', 'f1-score']
