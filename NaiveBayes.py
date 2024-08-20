@@ -1,11 +1,11 @@
-import matplotlib
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.naive_bayes import GaussianNB
 
+# Load the dataset
 df = pd.read_csv('../../Data/dataset_small.csv')
 
 # Plot the distribution of phishing vs legitimate
@@ -15,25 +15,28 @@ plt.xlabel('Legitimate (0) vs Phishing (1)')
 plt.ylabel('Count')
 plt.show()
 
+# Define features and target
 features = df.columns[:-1]
 x = df[features]
 y = df['phishing']
 
-
 # Split the dataset
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
 
-# Train the RandomForestClassifier
-rf = RandomForestClassifier(n_estimators=100, random_state=42)
-rf.fit(x_train, y_train)
+# Train the Naive Bayes Classifier
+nb_model = GaussianNB()
+nb_model.fit(x_train, y_train)
 
-y_pred = rf.predict(x_test)
+# Make predictions
+y_pred = nb_model.predict(x_test)
 
+# Calculate accuracy and generate classification report
 accuracy = accuracy_score(y_test, y_pred)
 
 report = classification_report(y_test, y_pred, output_dict=True)
 print(report)
 
+# Convert the classification report to a DataFrame
 df_report = pd.DataFrame(report).transpose()
 
 # Plot the metrics
@@ -49,6 +52,3 @@ for i, metric in enumerate(metrics, 1):
     plt.ylabel(metric.capitalize())
 plt.tight_layout()
 plt.show()
-
-
-
