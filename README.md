@@ -11,12 +11,8 @@ The project is organized as follows to ensure modularity and ease of navigation:
 
 AI-Phishing-Detection/
 │
-├── Code/ # All code files
+├── Code/ # All code files 
   ├── app/ # B Frontend
-│ ├── backend/ # Backend scripts and modules
-│ └── output/ # Output files from scripts and models
-│
-└── Data/ # Datasets and data files
-├── CSV_datasets/ # Datasets in CSV format
-├── eml_datasets/ # Email datasets in EML format
-└── testing_datasets/ # Datasets used for testing models
+  ├── backend/ # Backend scripts and modules
+  ├── data/ # Backend scripts and modules
+  └── output/ # Output files from scripts and models
