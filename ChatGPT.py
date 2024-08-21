@@ -4,6 +4,7 @@ import os
 from email import policy
 from email.parser import BytesParser
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+import re
 
 # Initialize OpenAI client
 client = OpenAI()
@@ -20,7 +21,17 @@ def query_llm(prompt):
 
 def generate_prompt(headers, body):
     prompt_template = """
-    I want you to act as a spam detector to determine whether a given email is a phishing email or a legitimate email. Your analysis should be thorough and evidence-based. Phishing emails often impersonate legitimate brands and use social engineering techniques to deceive users. These techniques include, but are not limited to: fake rewards, fake warnings about account problems, and creating a sense of urgency or interest. Spoofing the sender address and embedding deceptive HTML links are also common tactics. Analyze the email by following these steps:
+    I want you to act as a spam detector to determine whether a given email is a phishing email or a legitimate email. Your analysis should be thorough and evidence-based. Phishing emails often impersonate legitimate brands and use social engineering techniques to deceive users. These techniques include, but are not limited to: fake rewards, fake warnings about account problems, and creating a sense of urgency or interest. Spoofing the sender address and embedding deceptive HTML links are also common tactics. 
+
+    Here are the details of the email:
+
+    Email Headers:
+    {headers}
+
+    Email Body:
+    {body}
+
+    Analyze the email by following these steps:
 
     1. Identify any impersonation of well-known brands.
 
@@ -39,6 +50,7 @@ def generate_prompt(headers, body):
     """
     return prompt_template.format(headers=json.dumps(headers, indent=2), body=body)
 
+
 def parse_eml(file_path):
     with open(file_path, 'rb') as f:
         msg = BytesParser(policy=policy.default).parse(f)
@@ -46,18 +58,31 @@ def parse_eml(file_path):
     body = msg.get_body(preferencelist=('plain', 'html')).get_content()
     return headers, body
 
+
 def extract_label_from_response(response):
     try:
-        response_json = json.loads(response)
-        is_phishing = response_json.get("is_phishing")
-        if is_phishing == 1:
-            return "phishing"
-        elif is_phishing == 0:
-            return "legitimate"
+        # Normalize and clean the response string
+        response = response.strip().lower()
+
+        # Look for the "is_phishing" field and its value
+        match = re.search(r'"is_phishing"\s*:\s*(\d+)', response)
+
+        if match:
+            is_phishing = int(match.group(1))
+            return "phishing" if is_phishing == 1 else "legitimate"
         else:
-            return "uncertain"  # Handle unexpected values
-    except json.JSONDecodeError:
-        return "error"  # Handle cases where the response is not valid JSON
+            # Handle cases where "is_phishing" isn't found directly
+            if "phishing" in response:
+                return "phishing"
+            elif "legitimate" in response:
+                return "legitimate"
+            else:
+                return "error"  # If the response is unclear, return an error label
+
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return "error"
+
 
 def process_eml_files_in_directory(directory_path, label, results, start_count, true_labels, predicted_labels):
     count = start_count  # Start the counter from the provided start_count value
