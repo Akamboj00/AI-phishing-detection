@@ -12,7 +12,7 @@ The project is organized as follows to ensure modularity and ease of navigation:
 AI-Phishing-Detection/<br>
 │<br>
 ├── Code/ # All code files <br>
-&nbsp;├── app/ # B Frontend<br>
-  ├── backend/ # Backend scripts and modules<br>
-  ├── data/ # Backend scripts and modules<br>
-  └── output/ # Output files from scripts and models<br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── app/ # B Frontend<br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── backend/ # Backend scripts and modules<br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── data/ # Backend scripts and modules<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── output/ # Output files from scripts and models<br>
