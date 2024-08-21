@@ -9,7 +9,7 @@ Welcome to the AI-Phishing-Detection repository. This project is part of a Maste
 ### File Structure
 The project is organized as follows to ensure modularity and ease of navigation:
 
-AI-Phishing-Detection/<br/>
+AI-Phishing-Detection/<br>
 │
 ├── Code/ # All code files 
   ├── app/ # B Frontend
