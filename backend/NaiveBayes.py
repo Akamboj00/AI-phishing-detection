@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.naive_bayes import GaussianNB
 
 # Load the dataset
-df = pd.read_csv('../../../Data/CSV_datasets/dataset_small.csv')
+df = pd.read_csv('../data/CSV_datasets/dataset_full.csv')
 
 # Plot the distribution of phishing vs legitimate
 sns.countplot(x='phishing', data=df)

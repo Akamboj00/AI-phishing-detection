@@ -123,8 +123,9 @@ def calculate_metrics(true_labels, predicted_labels):
     return accuracy, precision, recall, f1, report
 
 def main():
-    phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\testing\phishing_pot-main\combined\phishing_emails'
-    legitimate_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Data\testing\phishing_pot-main\combined\legitimate_emails'
+    phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\phishing_emails'
+
+    legitimate_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\legitimate_emails'
 
     # Output file to save results
     output_file = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\testing\results.json'

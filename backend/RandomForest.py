@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-df = pd.read_csv('../Data/CSV_datasets/dataset_small.csv')
+df = pd.read_csv('../data/CSV_datasets/dataset_small.csv')
 
 # Plot the distribution of phishing vs legitimate
 sns.countplot(x='phishing', data=df)
