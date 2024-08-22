@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="home-button">
+        <a href="/" class="btn"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="container">
+        <h1>Train our models with your datasets</h1>
+        <div class="train-section">
+            <div class="model-selection">
+                <form id="model-form">
+                    <input type="checkbox" id="random-forest" name="model" value="Random Forest">
+                    <label for="random-forest">Random Forest</label><br>
+                    <input type="checkbox" id="naive-bayes" name="model" value="Naive Bayes" checked>
+                    <label for="naive-bayes">Naive Bayes</label><br>
+                    <input type="checkbox" id="xgboost" name="model" value="XGBoost" checked>
+                    <label for="xgboost">XGBoost</label><br>
+                    <input type="checkbox" id="all" name="model" value="All">
+                    <label for="all">All the above</label>
+                </form>
+            </div>
+            <div class="upload-section">
+                <button class="btn" onclick="uploadDataset()">Upload Dataset</button>
+            </div>
+            <button class="btn train-btn" onclick="trainModel()">Train Model</button>
+        </div>
+    </div>
+    <script>
+        function uploadDataset() {
+            alert("Upload Dataset feature coming soon!");
+        }
+
+        function trainModel() {
+            alert("Training Model...");
+        }
+    </script>
+</body>
+</html>

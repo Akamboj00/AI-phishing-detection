@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.train-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.model-selection {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #444;
+}
+
+.train-btn {
+    margin-top: 10px;
+}
+
+.home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.home-button .btn {
+    background: none; /* Remove the background color */
+    padding: 0;
+    border: none;
+}
+
+.home-button .btn i {
+    font-size: 24px; /* Adjust the size of the icon */
+    color: #000; /* Change the color of the icon */
+    transition: color 0.3s ease;
+}
+
+.home-button .btn i:hover {
+    color: #444; /* Change color on hover */
+}
