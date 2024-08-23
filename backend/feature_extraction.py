@@ -19,14 +19,46 @@ class EmailFeatureExtractor:
             # Iterate through parts and extract content based on type
             for part in msg.iter_parts():
                 content_type = part.get_content_type()
-                if content_type == 'text/plain':
-                    body = part.get_content().strip()  # Plain text preferred
-                    break  # Stop at the first plain text part found
-                elif content_type == 'text/html':
-                    body = part.get_content().strip()  # Fallback to HTML if no plain text
+                try:
+                    if content_type == 'text/plain':
+                        plain_text_body = part.get_content().strip()
+                        if plain_text_body:
+                            body = plain_text_body
+                            break  # Stop if a non-empty plain text part is found
+                    elif content_type == 'text/html':
+                        html_body = part.get_content().strip()
+                        if not body:  # Only use HTML if no non-empty plain text found
+                            body = html_body
+                    elif content_type.startswith('multipart/form-data'):
+                        # Handling unusual multipart types by extracting first non-empty text part
+                        for subpart in part.iter_parts():
+                            sub_content_type = subpart.get_content_type()
+                            if sub_content_type.startswith('text/'):
+                                sub_body = subpart.get_content().strip()
+                                if sub_body:
+                                    body = sub_body
+                                    break
+                    elif content_type.startswith('multipart/'):
+                        # If it's any other multipart type, try to extract text content
+                        for subpart in part.iter_parts():
+                            sub_content_type = subpart.get_content_type()
+                            if sub_content_type.startswith('text/'):
+                                sub_body = subpart.get_content().strip()
+                                if sub_body:
+                                    body = sub_body
+                                    break
+                except Exception as e:
+                    print(f"Error processing part of type {content_type}: {e}")
+
         else:
             # Handle non-multipart emails
-            body = msg.get_body(preferencelist=('plain', 'html')).get_content().strip()
+            try:
+                body = msg.get_body(preferencelist=('plain', 'html')).get_content().strip()
+            except Exception as e:
+                print(f"Error processing single part email: {e}")
+
+        if not body:
+            print(f"Warning: No body content found in file {file_path}.")
 
         return headers, body
 

@@ -5,20 +5,22 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.impute import SimpleImputer
 
-df = pd.read_csv('../data/CSV_datasets/dataset_small.csv')
+df = pd.read_csv('../output/combined_email_features.csv')
+
+# Impute missing values using the mean of the column
+imputer = SimpleImputer(strategy='mean')
+x = imputer.fit_transform(df[df.columns[:-1]])
+
+y = df['label']
 
 # Plot the distribution of phishing vs legitimate
-sns.countplot(x='phishing', data=df)
+sns.countplot(x='label', data=df)
 plt.title('Distribution of Phishing vs Legitimate')
 plt.xlabel('Legitimate (0) vs Phishing (1)')
 plt.ylabel('Count')
 plt.show()
-
-features = df.columns[:-1]
-x = df[features]
-y = df['phishing']
-
 
 # Split the dataset
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
@@ -27,13 +29,15 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_
 rf = RandomForestClassifier(n_estimators=100, random_state=42)
 rf.fit(x_train, y_train)
 
+# Predict on the test set
 y_pred = rf.predict(x_test)
 
+# Calculate accuracy
 accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy}")
 
+# Generate a classification report
 report = classification_report(y_test, y_pred, output_dict=True)
-print(report)
-
 df_report = pd.DataFrame(report).transpose()
 
 # Plot the metrics
@@ -49,6 +53,4 @@ for i, metric in enumerate(metrics, 1):
     plt.ylabel(metric.capitalize())
 plt.tight_layout()
 plt.show()
-
-
 
