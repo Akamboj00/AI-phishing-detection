@@ -6,56 +6,34 @@ import os
 
 class EmailFeatureExtractor:
     def __init__(self):
-        self.vectorizer = TfidfVectorizer()
+        self.vectorizer = TfidfVectorizer(max_features=500)
 
     def parse_eml(self, file_path):
         with open(file_path, 'rb') as f:
-            msg = BytesParser(policy=policy.default).parse(f)
+            try:
+                msg = BytesParser(policy=policy.default).parse(f)
+            except Exception as e:
+                print(f"Error parsing email file {file_path}: {e}")
+                return {}, ""
 
         headers = dict(msg.items())
         body = ""
 
-        if msg.is_multipart():
-            # Iterate through parts and extract content based on type
-            for part in msg.iter_parts():
-                content_type = part.get_content_type()
-                try:
-                    if content_type == 'text/plain':
-                        plain_text_body = part.get_content().strip()
-                        if plain_text_body:
-                            body = plain_text_body
-                            break  # Stop if a non-empty plain text part is found
-                    elif content_type == 'text/html':
-                        html_body = part.get_content().strip()
-                        if not body:  # Only use HTML if no non-empty plain text found
-                            body = html_body
-                    elif content_type.startswith('multipart/form-data'):
-                        # Handling unusual multipart types by extracting first non-empty text part
-                        for subpart in part.iter_parts():
-                            sub_content_type = subpart.get_content_type()
-                            if sub_content_type.startswith('text/'):
-                                sub_body = subpart.get_content().strip()
-                                if sub_body:
-                                    body = sub_body
-                                    break
-                    elif content_type.startswith('multipart/'):
-                        # If it's any other multipart type, try to extract text content
-                        for subpart in part.iter_parts():
-                            sub_content_type = subpart.get_content_type()
-                            if sub_content_type.startswith('text/'):
-                                sub_body = subpart.get_content().strip()
-                                if sub_body:
-                                    body = sub_body
-                                    break
-                except Exception as e:
-                    print(f"Error processing part of type {content_type}: {e}")
-
-        else:
-            # Handle non-multipart emails
-            try:
+        try:
+            if msg.is_multipart():
+                for part in msg.walk():
+                    content_type = part.get_content_type()
+                    try:
+                        if content_type == 'text/plain' or content_type == 'text/html':
+                            part_body = part.get_content().strip()
+                            if part_body:
+                                body = part_body  # preferring the last text part found
+                    except Exception as e:
+                        print(f"Error processing part of type {content_type} in file {file_path}: {e}")
+            else:
                 body = msg.get_body(preferencelist=('plain', 'html')).get_content().strip()
-            except Exception as e:
-                print(f"Error processing single part email: {e}")
+        except Exception as e:
+            print(f"Error processing email body in file {file_path}: {e}")
 
         if not body:
             print(f"Warning: No body content found in file {file_path}.")
@@ -127,9 +105,9 @@ class EmailFeatureExtractor:
 
 # Example usage
 if __name__ == "__main__":
-    phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\phishing_emails'
+    phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\train_spam_ham_eml\phishing_emails'
 
-    legitimate_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\legitimate_emails'
+    legitimate_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\train_spam_ham_eml\legitimate_emails'
 
     output_csv = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'
 
