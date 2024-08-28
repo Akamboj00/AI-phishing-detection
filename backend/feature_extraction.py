@@ -86,6 +86,30 @@ class EmailFeatureExtractor:
         df['label'] = labels
         return df
 
+    def extract_features_without_label(self, directory_path):
+        email_bodies = []
+
+        # Iterate over all files in the directory
+        for filename in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            try:
+                headers, body = self.parse_eml(file_path)
+                if body:  # Only include non-empty bodies
+                    email_bodies.append(body)
+            except Exception as e:
+                print(f"Error processing file {filename}: {e}. Skipping...")
+
+        if not email_bodies:
+            raise ValueError("No valid email bodies found in the directory.")
+
+        # Extract TF-IDF features for all email bodies
+        tfidf_features = self.extract_tfidf_features(email_bodies)
+        dense_features = tfidf_features.toarray()
+
+        # Convert to DataFrame
+        df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
+        return df
+
     def save_combined_csv(self, phishing_dir, legitimate_dir, csv_file_path):
         """
         Processes both phishing and legitimate email directories and saves the combined features to a CSV file.
@@ -102,6 +126,8 @@ class EmailFeatureExtractor:
         # Save to CSV
         combined_df.to_csv(csv_file_path, index=False)
         print(f"Combined TF-IDF features and labels saved to {csv_file_path}")
+
+
 
 # Example usage
 if __name__ == "__main__":
