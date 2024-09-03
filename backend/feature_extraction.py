@@ -6,6 +6,7 @@ import os
 
 class EmailFeatureExtractor:
     def __init__(self):
+        # Initialize a new TF-IDF vectorizer without loading from a file
         self.vectorizer = TfidfVectorizer(max_features=500)
 
     def parse_eml(self, file_path):
@@ -50,6 +51,23 @@ class EmailFeatureExtractor:
             raise ValueError("The corpus is empty. Ensure there are valid email bodies to process.")
         tfidf_matrix = self.vectorizer.fit_transform(corpus)
         return tfidf_matrix
+
+    def extract_tfidf_features_single_email(self, email_body):
+        """
+        Extract TF-IDF features for a single email body.
+        :param email_body: The body of the email.
+        :return: DataFrame containing TF-IDF features for the email.
+        """
+        if not email_body:
+            raise ValueError("The email body is empty. Ensure there is valid email content to process.")
+
+        # Transform using the vectorizer (fit and transform for a single instance)
+        tfidf_features = self.vectorizer.transform([email_body])
+        dense_features = tfidf_features.toarray()
+
+        # Convert to DataFrame
+        df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
+        return df
 
     def process_directory(self, directory_path, label):
         """
@@ -110,6 +128,24 @@ class EmailFeatureExtractor:
         df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
         return df
 
+    def process_single_email(self, file_path):
+        """
+        Process a single email file to extract its TF-IDF features.
+        :param file_path: Path to the email file.
+        :return: DataFrame containing TF-IDF features.
+        """
+        headers, body = self.parse_eml(file_path)
+        if not body:
+            raise ValueError("The email body is empty. Ensure there is valid email content to process.")
+
+        # Fit and transform the vectorizer with the single email body
+        tfidf_features = self.vectorizer.fit_transform([body])
+        dense_features = tfidf_features.toarray()
+
+        # Convert to DataFrame
+        df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
+        return df
+
     def save_combined_csv(self, phishing_dir, legitimate_dir, csv_file_path):
         """
         Processes both phishing and legitimate email directories and saves the combined features to a CSV file.
@@ -128,14 +164,27 @@ class EmailFeatureExtractor:
         print(f"Combined TF-IDF features and labels saved to {csv_file_path}")
 
 
-
-# Example usage
 if __name__ == "__main__":
-    phishing_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\train_spam_ham_eml\phishing_emails'
+    # Paths for directories used in combined CSV creation
+    # phishing_dir = r'path\to\phishing\emails'
+    # legitimate_dir = r'path\to\legitimate\emails'
+    # output_csv = r'path\to\output\combined_email_features.csv'
 
-    legitimate_dir = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\train_spam_ham_eml\legitimate_emails'
-
-    output_csv = r'C:\Users\abhil\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'
-
+    # Initialize the feature extractor
     extractor = EmailFeatureExtractor()
-    extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv)
+
+    # Create the combined CSV for training data
+    # extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv)
+
+    # Path for the single email to be processed
+    single_email_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\phishing_emails\sample-10.eml'
+
+    # Path to save the TF-IDF features from the single email
+    single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\backend\temp_email_features.csv'
+
+    # Process the single email and extract features
+    single_email_features_df = extractor.process_single_email(single_email_path)
+
+    # Save the features to the specified CSV file
+    single_email_features_df.to_csv(single_email_output_csv, index=False)
+    print(f"TF-IDF features for the single email saved to {single_email_output_csv}")

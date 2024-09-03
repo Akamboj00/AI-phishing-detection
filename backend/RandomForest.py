@@ -4,29 +4,20 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.impute import SimpleImputer
 import joblib
-import os
-
 
 def load_and_preprocess_data(filepath):
-    # Load the dataset
+    # Load the dataset (already contains TF-IDF features)
     df = pd.read_csv(filepath)
 
     # Remove duplicate rows
     df = df.drop_duplicates()
 
     # Separate features and labels
-    features = df.columns[:-1]
-    X = df[features].values
+    X = df.drop('label', axis=1).values  # Assumes all columns except 'label' are features
     y = df['label']
 
-    # Handle missing values
-    imputer = SimpleImputer(strategy='mean')
-    X = imputer.fit_transform(X)
-
     return train_test_split(X, y, test_size=0.3, random_state=42)
-
 
 def train_and_evaluate_model(model, X_train, X_test, y_train, y_test, model_path):
     # Perform cross-validation
@@ -65,30 +56,13 @@ def train_and_evaluate_model(model, X_train, X_test, y_train, y_test, model_path
     plt.tight_layout()
     plt.show()
 
-
-def predict_from_model(model_path, csv_file):
-    # Load the saved model
-    model = joblib.load(model_path)
-    print(f"Model loaded from {model_path}")
-
-    # Load and preprocess the new data
-    df = pd.read_csv(csv_file)
-    features = df.columns[:-1]
-    X = df[features].values
-
-    imputer = SimpleImputer(strategy='mean')
-    X = imputer.fit_transform(X)
-
-    # Make predictions
-    predictions = model.predict(X)
-    return predictions
-
-
 if __name__ == "__main__":
-    filepath = '../output/combined_email_features.csv'
+    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'  # Provide the correct path to your dataset
     model_path = 'trained_models/random_forest_model.pkl'
 
-    # Train and save the model
+    # Load, preprocess data, and split into training and test sets
     X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)
+
+    # Initialize and train the RandomForest model
     rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
     train_and_evaluate_model(rf_model, X_train, X_test, y_train, y_test, model_path)
