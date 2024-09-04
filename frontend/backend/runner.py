@@ -8,7 +8,7 @@ from XGBoost import train_and_evaluate_model as xgb_train_and_evaluate_model
 import xgboost as xgb
 
 # Define the file path
-filepath = '../output/combined_email_features.csv'
+filepath = '../../output/combined_email_features.csv'
 
 # Load and preprocess data (shared across all models)
 X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)

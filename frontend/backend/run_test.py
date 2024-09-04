@@ -31,7 +31,7 @@ def predict_single_email(model, single_email_features):
 
 if __name__ == "__main__":
     model_path = 'trained_models/random_forest_model.pkl'  # Path to your trained model
-    single_email_csv_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\backend\temp_email_features.csv'  # Path to the single email's TF-IDF CSV
+    single_email_csv_path = r'/Code/AI-phishing-detection/frontend/backend/temp_email_features.csv'  # Path to the single email's TF-IDF CSV
 
     # Load the trained model
     model = load_model_and_vectorizer(model_path)

@@ -177,7 +177,7 @@ if __name__ == "__main__":
     # extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv)
 
     # Path for the single email to be processed
-    single_email_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\combined_spam_ham_eml\phishing_emails\sample-10.eml'
+    single_email_path = r'/Code/AI-phishing-detection/data/testing_datasets/combined_spam_ham_eml/phishing_emails/sample-10.eml'
 
     # Path to save the TF-IDF features from the single email
     single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\backend\temp_email_features.csv'

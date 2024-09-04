@@ -1,282 +1,128 @@
 [
   {
     "result_id": 1,
-    "file": "sample-1.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits several red flags commonly associated with phishing attempts. Here are the key findings: \\n\\n1. Impersonation of well-known brands: The email claims to be from 'BANCO DO BRADESCO LIVELO' but uses a suspicious sender email address 'banco.bradesco@atendimento.com.br'. This impersonation of a popular bank could deceive recipients into believing the email is legitimate.\\n\\n2. Spoofing signs: The sender name and email address do not align perfectly with the claimed brand identity, indicating potential spoofing. The subject line creates a sense of urgency and offers a fake reward (LIVELO points expiring today) to prompt immediate action, a common tactic used in phishing scams. Additionally, the email contains links to external websites ('https://blog1seguimentmydomaine2bra.me/') that could lead recipients to malicious or deceptive pages.\\n\\n3. Social engineering tactics: The email employs social engineering techniques to manipulate recipients into clicking on the embedded hyperlink to 'Resgatar Agora,' promising a reward associated with LIVELO points - a strategy often used to entice users to engage with malicious content.\\n\\nBased on these findings, along with the suspicious header information and deceptive content, it is highly likely that this email is a phishing attempt. Recipients should avoid interacting with any links or providing personal information. Please consider marking this email as phishing and deleting it to prevent any potential risks.\"\n}"
-  },
-  {
-    "result_id": 2,
     "file": "sample-10.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple indicators of a phishing attempt. Here are the key points:\\n\\n1. Impersonation of a well-known brand: The email claims to be from the 'Microsoft account team' but is sent from a suspicious email address 'no-reply@access-accsecurity.com'. This is a common tactic used in phishing emails to trick recipients.\\n\\n2. Spoofing signs in header: The email header shows discrepancies in the sender details, with the 'From' email address not matching the sender domain. The subject line also creates a sense of urgency by mentioning 'Unusual sign.in activity' to prompt immediate action.\\n\\n3. Social engineering tactics: The email body prompts the recipient to click on a link to report unusual sign-in activity, which is a classic phishing technique to steal login credentials.\\n\\n4. Suspicious URLs: The email contains a hyperlink disguised as a 'Report The User' button, but the actual destination of the link is masked and could lead to a malicious website.\\n\\nBased on the evidence gathered, it is evident that this email is a phishing attempt seeking to deceive recipients into disclosing personal information or credentials.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"Upon analyzing the email, several indicators suggest that it is a phishing email attempting to deceive recipients. Here are the key points that support this conclusion: \\n\\n1. Impersonation of well-known brand: The email claims to be from the 'Microsoft account team' but the sender address is 'no-reply@access-accsecurity.com', which is not a Microsoft domain. This indicates potential impersonation of a legitimate brand. \\n\\n2. Email header signs: The email header shows signs of spoofing with discrepancies like the sender address not aligning with the claimed sender identity. The subject line also creates urgency by mentioning 'unusual sign-in activity'. \\n\\n3. Social engineering tactics: The email body includes a link prompting the recipient to report suspicious activity by clicking on it. This is a common tactic to deceive users into clicking malicious links. \\n\\nBased on these findings, it is highly likely that this email is a phishing attempt by impersonating Microsoft to trick recipients into divulging sensitive information or clicking on malicious links.\"\n}"
   },
   {
-    "result_id": 3,
+    "result_id": 2,
     "file": "sample-11.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple phishing indicators. The email header shows that the sender's IP does not match the claimed domain, which is a spoofing sign. The subject line creates a sense of urgency and includes an explicit warning to view the email only if the recipient is an adult, playing on curiosity. The email body contains a link with a deceptive display text promising free registration to a website with explicit content, leveraging social engineering to entice clicks. The URL in the link leads to a suspicious domain 'safecloud.link,' which is commonly associated with phishing scams. Overall, the email's content and tactics align with typical phishing strategies, aiming to deceive recipients into accessing malicious websites or revealing personal information.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email shows clear signs of phishing attempts. The subject line creates a sense of urgency and intrigue to entice the recipient to click. The sender email address is spoofed, trying to impersonate a legitimate brand. The email body contains explicit content warnings to grab attention and includes a suspicious link that may lead to a potentially harmful website. The combination of these elements points towards phishing behavior aimed at deceiving users.\"\n}"
   },
   {
-    "result_id": 4,
-    "file": "sample-12.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple indicators of phishing. Firstly, it impersonates the well-known brand 'Binance' in the sender name and email address to deceive the recipient. The email header shows a mismatch between the displayed sender ('Binance') and the actual sender ('ses.binance.com'), indicating possible spoofing. The subject line creates a sense of urgency by claiming immediate verification is required, a common tactic in phishing emails. The email body further pressures the recipient by threatening to disable the account if information is not updated within a short time frame, a classic social engineering technique. The inclusion of a hyperlink for updating information without providing specific details on where the link leads raises suspicions of phishing. Overall, the email demonstrates characteristics typical of phishing attempts, aiming to deceive users into revealing sensitive information or clicking on malicious links.\"\n}"
-  },
-  {
-    "result_id": 5,
-    "file": "sample-13.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits several signs of phishing. First, it impersonates the well-known brand Binance in both the sender name and email address. The email header shows that the email did not pass SPF, DKIM, and DMARC checks, indicating potential spoofing. The subject line creates a sense of urgency by requiring immediate verification. The email body urges the recipient to update their information with a threat of permanent account disablement within 72 hours, a common tactic used in phishing emails to prompt quick action. The lack of specific details about the supposed issue and the generic nature of the message raise suspicion. Furthermore, the presence of HTML links without clear destinations poses a risk of leading to malicious websites. Overall, the email displays typical characteristics of phishing attempts and should be treated with caution.\"\n}"
-  },
-  {
-    "result_id": 6,
+    "result_id": 3,
     "file": "sample-14.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple characteristics commonly associated with phishing emails. Here are the key indicators: \n    1. Impersonation of a well-known brand: The email claims to be from 'FreeSpins4You' but uses the email address 'registration@and.co.uk', attempting to deceive the recipient.\n    2. Spoofing signs in email headers: The email has SPF, DKIM, and DMARC fail results, indicating that the email may not be coming from the claimed sender. Additionally, the sender IP does not align with the purported domain. The subject line promotes a massive welcome offer and free spins, creating a sense of urgency and reward, typical in phishing campaigns.\n    3. Social engineering tactics: The email entices the recipient with a lucrative offer, directing them to click on links to redeem the rewards. The unsubscribe links and the embedded URLs lead to suspicious websites, increasing the risk of potential fraud or data theft.\n    Based on these findings, it is highly likely that the email is a phishing attempt, aiming to deceive recipients into divulging personal information or falling for a scam.\"\n}"
+    "response": "{\n        \"is_phishing\": 1,\n        \"analysis\": \"Several indicators suggest that this email is likely a phishing attempt. The email header shows failed SPF, DKIM, and DMARC checks, indicating potential spoofing. The sender address appears to be impersonating the well-known brand 'FreeSpins4You' but is actually coming from a different domain. The subject line includes typical phishing tactics like offering a massive welcome offer and free spins to create a sense of urgency and interest. The email body contains multiple hyperlinks, some of which lead to suspicious URLs like 'links.cpg.gp.digital,' raising concerns about potential phishing sites. Overall, the combination of spoofing signs, deceptive subject line, and dubious URLs strongly suggest phishing behavior.\"\n    }"
   },
   {
-    "result_id": 7,
+    "result_id": 4,
     "file": "sample-15.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email shows multiple signs of a phishing attempt:\n    \n    1. Impersonation of a well-known brand: The email pretends to be from MetaMask, a popular cryptocurrency wallet service.\n    2. Email header analysis:\n       - The sender address (87357344@mymts.net) does not match a legitimate MetaMask domain.\n       - The subject line creates a sense of urgency by mentioning a password change and the need to verify account access.\n    3. Social engineering tactics in the email body:\n       - Urgency: Claiming that a new device accessed the account and prompting the recipient to take immediate action.\n       - Request for sensitive information (12-word recovery phrase) to verify account ownership.\n       - Suspicious links that may lead to phishing websites.\n    4. The email includes elements commonly found in phishing emails, such as urgency, threats of account deactivation, and requests for sensitive information without proper authentication.\n    \n    Based on the above analysis, it is evident that the email exhibits characteristics of a phishing attempt, targeting recipients to disclose sensitive information or compromise their accounts.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email shows clear signs of phishing attempts based on several indicators: \n    1. The email impersonates the well-known brand 'MetaMask' in the From field, trying to deceive the recipient into thinking it is a legitimate communication from Metamask support.\n    2. The email header does not show any explicit signs of spoofing, but the impersonation of MetaMask adds to the suspicion. The subject line creates a sense of urgency by claiming a password change on the Metamask account, which is a common phishing tactic.\n    3. The email body employs social engineering tactics by claiming a password change and requesting immediate action to prevent deactivation of the account. The hyperlinks provided are not clearly visible due to text formatting, potentially leading to malicious websites.\n    4. The email lacks personalization, contains grammatical errors, and prompts the recipient to take urgent action, all typical characteristics of phishing emails. Additionally, the request for a 12-word recovery phrase is highly suspicious as legitimate service providers typically do not ask for such sensitive information over email.\n    5. In conclusion, considering the impersonation of a well-known brand, the urgent nature of the email, the request for sensitive information, and the overall suspicious elements present in the email, it is highly likely that this email is a phishing attempt.\"\n}"
   },
   {
-    "result_id": 8,
+    "result_id": 5,
     "file": "sample-16.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"Multiple indicators suggest that this email is likely a phishing attempt. The email header shows a discrepancy between the displayed sender name '2U' and the actual email address 'makarifulislamkariful24599@gmail.com'. The subject line contains typical phishing characteristics with urgency by mentioning 'Order Confirmation'. The email body might contain hyperlinks that could lead to suspicious websites. Additionally, the use of a fake sender address and potential deceiving links are common tactics used in phishing emails.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email shows several red flags indicating it is likely a phishing attempt:\n    1. Impersonation of a well-known brand: The email claims to be from '2U <makarifulislamkariful24599+NMwGO8qDiD8HKv6RyvtRa6ND11@gmail.com>', but the sender address appears suspicious and not associated with a legitimate brand.\n    2. Spoofing signs: The sender address domain does not align with the claimed sender name. The email header shows a mismatch in the sender information, indicating potential spoofing.\n    3. Phishing characteristics: The subject line 'OrderConfirmation:93345881' creates a sense of urgency and prompts the recipient to take immediate action, a common phishing tactic.\n    4. Social engineering tactics: The email body likely contains deceptive hyperlinks enticing the recipient to click. The lack of detailed information and the presence of a random order number in the subject further raise suspicion.\n    \n    Based on the above findings, it is highly probable that this email is a phishing attempt trying to deceive the recipient into revealing personal information or clicking on malicious links.\"\n}"
   },
   {
-    "result_id": 9,
-    "file": "sample-17.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple characteristics of a phishing attempt. Here are the key findings: \\n1. Impersonation of well-known brand: The email claims to be from 'Ledger Security' but uses the domain 'secureliveupdates.com' which is not a typical domain for Ledger's official communications. This impersonation raises suspicion.\\n2. Spoofing signs in email headers: The email header shows that the sender's IP is different from the claimed sender domain. Additionally, the subject line creates a sense of urgency by mentioning a 'security update' and 'your device may be vulnerable'. These are typical phishing tactics to prompt immediate action.\\n3. Social engineering tactics: The email body includes multiple hyperlinks disguised as legitimate Ledger links but actually lead to suspicious domains like 'sites.google.com/view/ledger-live/ledger-live-winx86-upgrade'. These deceptive URLs are commonly used in phishing emails to trick recipients into revealing sensitive information.\\nBased on these findings, it is evident that the email is a phishing attempt trying to deceive recipients into clicking on malicious links under the guise of a security update from Ledger. Therefore, the email is deemed as phishing.\"\n}"
-  },
-  {
-    "result_id": 10,
-    "file": "sample-18.eml",
-    "label": "phishing",
-    "predicted_label": "error",
-    "error": "Error code: 400 - {'error': {'message': \"This model's maximum context length is 16385 tokens. However, your messages resulted in 72984 tokens. Please reduce the length of the messages.\", 'type': 'invalid_request_error', 'param': 'messages', 'code': 'context_length_exceeded'}}"
-  },
-  {
-    "result_id": 11,
-    "file": "sample-19.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email contains several elements indicative of phishing attempts. While there is no direct impersonation of well-known brands, the email body promotes quick wealth through Bitcoin/Crypto trading and mining, a common tactic used in phishing scams. The use of a Telegram link for potential interaction raises suspicion of social engineering. Additionally, the email advises confidentiality, a strategy often employed to create a sense of importance and urgency. The message lacks personalization and contains typical phishing characteristics. Therefore, based on the content and tactics utilized, this email is likely a phishing attempt.\"\n}"
-  },
-  {
-    "result_id": 12,
+    "result_id": 6,
     "file": "sample-2.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits several indications of phishing. It impersonates Mashreq Bank in its branding and attempts to create a sense of urgency regarding email verification for security. The email includes multiple links that redirect to potentially misleading sites like bing.com instead of the bank's official domain. The header shows signs of spoofing with failed DKIM and DMARC verifications, pointing to a potential attempt to deceive the recipient. The combination of impersonation, urgency, and deceptive links strongly suggests that this email is a phishing attempt.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email shows multiple signs of being a phishing attempt. Here is a breakdown of the indicators: \\n\\n1. Impersonation of well-known brand: The email purports to be from 'MashreqAlerts' but uses a suspicious sender email address 'postmaster@digitalmashreq.mg.tdi.tc'. \\n2. Email header anomalies: The email header reveals failed authentication results, indicating a potential spoofing attempt. The subject line creates a sense of urgency by asking to confirm the email for security. \\n3. Deceptive tactics in email body: The email body contains hyperlinks that lead to suspicious URLs (e.g., bit.ly links masked behind legitimate text). These links could potentially redirect users to phishing websites. \\n\\nBased on the aggregation of these red flags, it is evident that this email is a phishing attempt aiming to deceive recipients. Therefore, the email should be treated as suspicious and not interacted with.\"\n}"
   },
   {
-    "result_id": 13,
-    "file": "sample-20.eml",
-    "label": "phishing",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"After a thorough analysis of the email, it has been determined that the email is legitimate. Here are the key points supporting this conclusion: \\n\\n1. Impersonation of well-known brand: The email is purported to be from the Stellar Development Foundation, a legitimate organization known in the cryptocurrency space. The sender name and email address align with the genuine organization. \\n\\n2. Email header examination: The email headers show no clear signs of spoofing. The authentication results indicate that the email passed SPF authentication and the sender's domain is aligned. While some authentication results show failures, they are not indicative of phishing. \\n\\n3. Email content analysis: The email content promotes a genuine initiative related to staking on the Stellar Network, offering information about payouts and a disclaimer about interacting with third parties. The email does not contain any explicit phishing tactics such as urgency, fake rewards, or deceptive links. The disclaimer emphasizes safety and privacy measures, which are typical for legitimate emails. \\n\\nBased on the lack of phishing characteristics, alignment with a known brand, and the genuine nature of the content, the email is classified as legitimate.\"\n}"
-  },
-  {
-    "result_id": 14,
-    "file": "sample-3.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email displays multiple phishing red flags. Firstly, the sender, Nora Alex, impersonates a legitimate individual, potentially to establish false credibility. The request for assistance in transferring funds and investing in a foreign country is a common tactic used in advance-fee scams. The sense of urgency created by mentioning immediate actions required further reinforces the phishing nature of the email. Additionally, the email lacks personalization, addressing the recipient as 'Querido' instead of using a specific name. Overall, the email exhibits classic signs of a phishing attempt, aiming to deceive the recipient into engaging in a financial scam.\"\n}"
-  },
-  {
-    "result_id": 15,
-    "file": "sample-4.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"Multiple indicators suggest that this email is likely a phishing attempt. The sender is impersonating Manpower Norge, a well-known brand, which is a common tactic used in phishing emails. The email header shows signs of spoofing with discrepancies in the sender information and SPF softfail warnings. The subject line creates a sense of urgency by claiming that the recipient's subscription has been terminated, a typical phishing tactic to prompt immediate action. The email body employs social engineering by prompting the recipient to click on a potentially malicious link disguised as an unsubscribe option. Given these red flags, it is advisable to treat this email as a phishing attempt.\"\n}"
-  },
-  {
-    "result_id": 16,
+    "result_id": 7,
     "file": "sample-5.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits several indicators of being a phishing attempt. Firstly, it impersonates the well-known brand Chase to deceive recipients. Secondly, the email header shows signs of spoofing, with the sender address appearing as phishing@pot instead of an authentic Chase domain. The subject line creates a sense of urgency by claiming the recipient's bank account has been blocked due to unusual activities. The email body employs social engineering tactics by instructing the recipient to click on a link to verify their account, which is a common phishing technique to capture sensitive information. The URL in the email leads to a suspicious domain, which is a red flag for phishing. Overall, the combination of impersonation, spoofing, urgency, and deceptive links indicates a high likelihood of phishing in this email.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits several characteristics of a phishing attempt. Here are the key findings:\n    \n    1. Impersonation of well-known brand: The email pretends to be from Chase, a well-known bank, but the sender's email address is suspicious (info-yagcfgyuze@boonsupply.com).\n    \n    2. Spoofing signs in the email header: There are discrepancies in the sender's email address (phishing@pot) and the shown sender name (Chase). The subject line creates a sense of urgency and alarm by claiming the recipient's bank account has been blocked due to unusual activities, typical of phishing tactics.\n    \n    3. Social engineering tactics: The email body contains a fake notification about a blocked bank account and urges the recipient to click on a link to 'Reactivate Your Account.' The link provided is suspicious and could lead to a phishing website.\n    \n    Based on the impersonation of a well-known brand, the spoofing signs in the header, the subject line's urgency, and the social engineering tactics in the email body, it is evident that this email is a phishing attempt trying to deceive the recipient into providing sensitive information or credentials.\"\n}"
   },
   {
-    "result_id": 17,
-    "file": "sample-6.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple indications of phishing characteristics. Firstly, the email header shows discrepancies in authentication results, with different domains like ahlatciyatirim.com.tr and stayfriends.de, raising suspicions of spoofing. The subject line uses tactics like promising a reward (Coca Cola Jahresvorrat) to entice the recipient. Additionally, the email body employs social engineering by creating urgency and interest in claiming the supposed prize. The presence of multiple hyperlinks disguised with shortened URLs leads to potentially malicious sites, increasing the risk of phishing. Overall, the email demonstrates typical phishing tactics and should be treated as suspicious.\"\n}"
-  },
-  {
-    "result_id": 18,
-    "file": "sample-7.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple characteristics of a phishing email. Here are the key indicators: \\n\\n1. Impersonation of a well-known brand: The email appears to be from Google Notifications, but further inspection reveals discrepancies in the sender's email address, which is a common tactic used in phishing emails.\\n\\n2. Spoofing signs in the header: The email header has various authentication results, but the sender's IP and email address do not perfectly align with the claimed sender (Google Notifications).\\n\\n3. Social engineering tactics: The email creates a sense of urgency by prompting the recipient to click on a link disguised as a Google Forms invitation. The generic nature of the message and the redirected URL raise suspicions of potential malicious intent.\\n\\nBased on these findings, the email is deemed phishing and should not be trusted.\"\n}"
-  },
-  {
-    "result_id": 19,
+    "result_id": 8,
     "file": "sample-8.eml",
     "label": "phishing",
     "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"Multiple indicators suggest that this email is a phishing attempt. The email header shows a discrepancy in the sender name ('FTXinsurance') and email address ('noreplye@promotix.com'), indicating potential spoofing. The subject line creates a sense of urgency by claiming 'Withdraw Process is Authorized Now!' to prompt immediate action. The email body uses social engineering tactics by impersonating FTX, a well-known brand, and lures recipients to click on a suspicious link under the guise of withdrawing digital assets. The link in the email body leads to a non-related URL, indicating malicious intent. These elements collectively demonstrate characteristics commonly found in phishing emails.\"\n}"
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"This email exhibits several characteristics typical of phishing attempts. Firstly, the email impersonates 'FTXinsurance' from the domain 'promotix.com' to appear as a legitimate brand. However, upon closer inspection, the sender email address 'noreplye@promotix.com' does not align with the expected domain of a reputable insurance company. The subject line creates a sense of urgency by stating 'Withdraw Process is Authorized Now!' which is a common tactic to prompt immediate action from recipients. The email body employs social engineering techniques to manipulate the recipient into clicking on the 'Withdraw Now' button by claiming eligibility for withdrawing digital assets from an FTX account. The button URL leads to a suspicious link 'http://www.kif.re.kr/kif2///publication/viewer.aspx?controlno=229274&amp;returnurl=http://taurus-online.ch/wp/pf/', which does not match the expected domain for financial transactions. Overall, the combination of impersonation, urgency, and deceptive links strongly indicates that this email is a phishing attempt.\"\n}"
   },
   {
-    "result_id": 20,
-    "file": "sample-9.eml",
-    "label": "phishing",
-    "predicted_label": "phishing",
-    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits multiple signs of being a phishing attempt. Here are the key indicators:\\n\\n1. Impersonation of a well-known brand: The email claims to be from 'C o i n b a s e' but the actual sender email is 'noreply@firesonic.ca', attempting to impersonate the legitimate cryptocurrency exchange Coinbase.\\n\\n2. Spoofing signs in the email header: The sender address discrepancy and the impersonation of Coinbase raise suspicions about the email's authenticity. The subject line creates a sense of urgency by mentioning a transaction that the recipient did not initiate.\\n\\n3. Social engineering tactics: The email body includes a deceptive hyperlink disguised as a 'Cancel Transactions' button. Clicking on this link could lead to a malicious website masquerading as a legitimate service.\\n\\n4. Lack of personalized information: The email does not address the recipient by name or provide any specific details related to the supposed transaction, which is a common tactic in phishing emails.\\n\\nBased on these observations, it is highly likely that the email is a phishing attempt aimed at deceiving recipients into clicking on malicious links or providing sensitive information. It is strongly advised not to interact with any links or download attachments from this email.\"\n}"
-  },
-  {
-    "result_id": 21,
+    "result_id": 9,
     "file": "0007.c75188382f64b090022fa3b095b020b0",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Based on the analysis of the header and email content, this email appears to be legitimate. There is no impersonation of well-known brands or clear signs of spoofing in the email header. The sender's address matches the sender's name, and there are no urgent or reward-based phishing characteristics in the subject line or email body. The email primarily focuses on a discussion about a recipe, with no attempt to deceive or manipulate the recipient. Additionally, the unsubscribe link provided seems legitimate and leads to a known domain. Overall, the email does not exhibit typical phishing tactics and is likely a genuine communication within a Yahoo! Groups discussion.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"This email is considered legitimate based on the analysis of the email headers, email body, and lack of clear phishing indicators. There are no obvious impersonations of well-known brands, and the sender's email address matches the sender's name. The email header does not show any clear signs of spoofing or malicious intent. The email body consists of a genuine conversation about a recipe, without any social engineering tactics or deceptive links. Furthermore, the email contains information related to a Yahoo! Groups discussion, further suggesting its authenticity. Therefore, based on the absence of phishing elements and the overall context, this email is deemed legitimate.\"\n}"
   },
   {
-    "result_id": 22,
+    "result_id": 10,
     "file": "0008.20bc0b4ba2d99aae1c7098069f611a9b",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the following analysis: 1. There is no impersonation of well-known brands in the email. 2. The email header does not show clear signs of spoofing. The subject line, although sensationalist, does not exhibit typical phishing characteristics like urgency or fake rewards. 3. The email body contains a news article snippet about a German playboy, which is not designed to induce clicks on hyperlinks. There are no embedded hyperlinks in the body text. 4. There are no deceptive URLs or attempts to mislead the recipient. 5. Overall, the email content is straightforward and does not appear to be attempting to deceive or manipulate the recipient for malicious purposes. Therefore, the email is considered legitimate.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate and does not exhibit typical phishing characteristics. There is no impersonation of well-known brands, and the content of the email does not contain urgent or deceptive requests. The email header does not show clear signs of spoofing, and the sender address matches the sender's name. The email body contains a news article about a Berlin playboy, which does not pose a threat or attempt to deceive the recipient. The provided email seems to be a regular newsletter from a Yahoo! Group discussing a news article. Therefore, based on the analysis, it can be concluded that the email is legitimate.\"\n}"
   },
   {
-    "result_id": 23,
-    "file": "0009.435ae292d75abb1ca492dcc2d5cf1570",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate. There are no clear indicators of phishing in this email. The email header information aligns with a typical email communication. The email body consists of a discussion related to a recipe and a link to a website for reference. There are no obvious signs of impersonation, spoofing, urgency, reward promises, or suspicious links in this email. Therefore, based on the content provided, the email can be considered legitimate.\"\n}"
-  },
-  {
-    "result_id": 24,
+    "result_id": 11,
     "file": "0067.d77af11e9b2a74048c073462efecca12",
     "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email does not exhibit typical phishing characteristics. There is no impersonation of well-known brands, and the header does not show any obvious signs of spoofing. The subject line is related to the content of the email conversation, without any urgency or reward promises. The email body contains a discussion excerpt and a legitimate looking link to a mailing list info page. URLs in the email are also pointing to known domains. Overall, the email appears to be a legitimate communication among individuals discussing a topic. Therefore, it is assessed as non-phishing.\"\n}"
+    "predicted_label": "phishing",
+    "response": "{\n    \"is_phishing\": 1,\n    \"analysis\": \"The email exhibits strong indicators of being a phishing attempt based on the following observations: \n    1. Impersonation: The email header shows that the sender's address has been spoofed as 'harley@argote.ch' even though the Return-Path is from 'fork-admin@xent.com', potentially to deceive the recipient.\n    2. Spoofing Signs: The discrepancy between the sender address in the From field ('harley@argote.ch') and the Return-Path ('fork-admin@xent.com') raises suspicion of spoofing.\n    3. Social Engineering: The email body includes a hyperlink that appears to lead to 'http://xent.com/mailman/listinfo/fork', but its actual destination is unknown. The mention of a conversation between known political figures is an attempt to establish credibility and divert attention from the suspicious link.\n    Based on these elements indicating deception and potential malicious intent, it is highly likely that this email is a phishing attempt aimed at tricking recipients into clicking on a concealed link for nefarious purposes.\"\n}"
   },
   {
-    "result_id": 25,
+    "result_id": 12,
     "file": "0068.f1c604a78739e4f966253d762c972dde",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email does not exhibit characteristics commonly found in phishing emails. There is no impersonation of well-known brands, no spoofing signs in the email header, and the content does not contain social engineering tactics or suspicious URLs. The email appears to be a simple notification from the sender about their unavailability over the weekend. Therefore, based on the lack of phishing indicators, the email is deemed legitimate.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the following analysis: \n    1. There is no impersonation of well-known brands in the email.\n    2. The email header does not show any clear signs of spoofing. The sender name and email address match, and the subject line is not indicative of typical phishing characteristics like urgency or promises of rewards.\n    3. The email body is a simple message from Daniel Quinlan, indicating that he won't be reading emails until Sunday night. There are no hyperlinks or attempts to induce clicking on suspicious URLs.\n    4. Overall, the email lacks the typical social engineering tactics and elements commonly found in phishing emails. It is a straightforward message with no malicious intent.\n    \"\n}"
   },
   {
-    "result_id": 26,
+    "result_id": 13,
     "file": "0069.7173de1d2da14306c5a20e8abda7a6e2",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Based on the analysis of the email header, sender details, content, and lack of typical phishing characteristics, the email appears to be legitimate. There are no clear indicators of impersonation of well-known brands, sender spoofing, or social engineering tactics aimed at deceiving the recipient. The email discusses technical topics related to kernel modules and does not contain any urgent requests or suspicious links. Therefore, it is more likely to be a genuine communication within a technical discussion group.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"After thorough analysis of the email headers and body, it appears to be a legitimate email from Matthias Saou regarding an RPM discussion list related to ALSA (Advanced Linux Sound Architecture). There are no clear indicators of phishing in this email. The sender's email address matches the displayed name, and the content focuses on technical discussions surrounding kernel packaging and customization. The email does not contain any suspicious links or requests for sensitive information. Therefore, it is assessed as a legitimate communication within the RPM community.\"\n}"
   },
   {
-    "result_id": 27,
-    "file": "0070.4f269f2d783b479971f31006fe17ce62",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Based on the analysis of the email, there are no clear indicators of phishing activities. The email does not impersonate any well-known brands, and the sender addresses in the header do not show signs of spoofing. The subject line and email body contain technical discussions related to DSL modems and routers, lacking typical phishing characteristics like urgency or fake rewards. The email appears to be a legitimate communication within a Linux users' group discussing networking configurations and equipment. Therefore, the email is deemed legitimate.\"\n}"
-  },
-  {
-    "result_id": 28,
-    "file": "0071.75403094cab986a246c1e7ce3460e827",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the analysis conducted. There are no clear indications of phishing or fraudulent behavior in the email headers or content. The headers contain information that aligns with genuine communication, and the email body discusses a relevant topic without any overt attempts to deceive or manipulate the recipient. The sender's domain and contact details also seem consistent and do not raise suspicion. Therefore, the email is considered legitimate.\"\n}"
-  },
-  {
-    "result_id": 29,
+    "result_id": 14,
     "file": "0072.d1c080832388ae81835ca069e2efffa3",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Upon thorough analysis, the email does not exhibit typical characteristics of a phishing attempt. The sender address matches the sender's name, and there are no signs of spoofing in the header. The subject line does not contain elements commonly found in phishing emails, such as urgency or promises of rewards. The email body contains a legitimate discussion related to a book and provides a link to a reputable academic website. The content does not attempt to induce the recipient into clicking on suspicious links or provide false information. Overall, the email appears to be a genuine communication discussing academic topics.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email does not exhibit clear indicators of phishing. The sender address matches the domain in the email body and header, indicating consistency. The email content is a discussion related to computer recreations and includes a legitimate-looking URL to a faculty webpage. There are no urgent requests, promises of rewards, or suspicious links that would typically be present in phishing emails. The email seems to be a genuine conversation between individuals discussing technical topics. Therefore, it is assessed as legitimate.\"\n}"
   },
   {
-    "result_id": 30,
-    "file": "0073.cd29b8202a4b05db3c6f0d71b72a3260",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"After thorough analysis of the email content and headers, no clear indicators of phishing activity were identified. The email appears to be a legitimate discussion among users of the SpamAssassin-Talk mailing list regarding technical aspects and opinions related to email filtering and spam prevention. There is no impersonation of well-known brands, no spoofing signs in the header, and no social engineering tactics aimed at deceiving users. The content primarily focuses on the functionality and implications of using the Habeas mark in email classification. Therefore, based on the lack of phishing elements and the context of the communication, the email is deemed legitimate.\"\n}"
-  },
-  {
-    "result_id": 31,
-    "file": "0074.78000652dcb19856e85ff9637f0e52dd",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n        \"is_phishing\": 0,\n        \"analysis\": \"Based on the thorough analysis of the email, it does not exhibit typical characteristics of phishing emails. There is no impersonation of well-known brands, and the email header does not show any signs of spoofing or discrepancies. The subject line is related to a specific query about looking for a file in zip files, lacking any urgency or reward promises typical of phishing emails. The email body is straightforward and does not contain any social engineering tactics to induce clicks on suspicious links. The email is focused on a technical query within the context of the Irish Linux Users' Group, suggesting a legitimate discussion among group members. Therefore, this email appears to be legitimate and not a phishing attempt.\"\n    }"
-  },
-  {
-    "result_id": 32,
-    "file": "0075.faa4a28fdd9a82edd6d35ebb6bae3085",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the analysis of the email headers and body content. There are no clear indicators of phishing attempts, such as impersonation of well-known brands, spoofing signs in the headers, or social engineering tactics to deceive the recipient. The content of the email is related to a technical discussion about searching for files in zip archives, and there are no suspicious links or requests for personal information. Overall, the email seems to be a genuine communication within a technical community.\"\n}"
-  },
-  {
-    "result_id": 33,
-    "file": "0076.f565b68778786f9b9736f779489331f0",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the following analysis: \n1. There is no impersonation of well-known brands in the email.\n2. The email header does not show any clear signs of spoofing. The sender's name and email address match, and the subject line does not exhibit typical phishing characteristics like urgency or promise of rewards.\n3. The email body contains a technical discussion related to configuring a console, and there are no social engineering tactics or suspicious URLs designed to induce clicks.\n4. The email content is consistent with a technical discussion within a Linux users' group, referencing specific Linux configurations and discussions about serial consoles.\n5. Therefore, based on the lack of phishing indicators and the context of the email content, it is assessed as legitimate.\"\n}"
-  },
-  {
-    "result_id": 34,
-    "file": "0077.dc5578862c0e716ee82e78b0dffbc8d2",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Upon analysis, this email does not exhibit typical characteristics of a phishing email. There is no clear impersonation of well-known brands, the sender addresses in the headers match, and the email content does not contain any urgent or deceptive requests. The header information seems consistent, and the email discusses personal experiences with an internet service provider, lacking any explicit phishing attempts. Therefore, this email is considered legitimate.\"\n}"
-  },
-  {
-    "result_id": 35,
+    "result_id": 15,
     "file": "0078.8481bc92aa3ab9d23ca30c0eaecfc5e4",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the following analysis: 1. There is no obvious impersonation of well-known brands in the email. 2. The email header does not show clear signs of spoofing, and the subject line does not exhibit typical phishing characteristics like urgency or promises of rewards. The To address being a dummy address does not necessarily indicate phishing. 3. The email body contains a hyperlink to a legitimate BBC Radio website, which is not misleading or suspicious. 4. Overall, there are no strong indicators of phishing tactics in this email, and the content seems to align with a standard mailing list message. Therefore, the email is considered legitimate.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email is deemed legitimate based on the analysis of the email headers and body content. There are no overt signs of impersonation of well-known brands. The email header does not show clear spoofing signs, and the sender name and email address match. The subject line does not exhibit typical phishing characteristics like urgency or promises of rewards. The email body contains a URL link to a legitimate BBC website, which is not misleading or suspicious. Overall, the email does not exhibit common phishing tactics and appears to be a genuine communication related to a mailing list.\"\n}"
   },
   {
-    "result_id": 36,
+    "result_id": 16,
     "file": "0079.083beadce354774290a4a5bc4175366e",
     "label": "legitimate",
-    "predicted_label": "phishing",
-    "response": "{\n        \"is_phishing\": 1,\n        \"analysis\": \"This email exhibits several characteristics commonly found in phishing emails. The sender appears to be impersonating Gordon Rutter, a well-known figure, to lend credibility to the message. The email header shows signs of potential spoofing, with discrepancies in the sender's information. The subject line creates a sense of urgency by mentioning 'New Nessie Pics,' a common tactic in phishing to lure recipients into clicking on links. The email body contains a hyperlink to a website (www.hi-lands.com) with unclear context, which can be a deceptive tactic to trick users into visiting malicious sites. The presence of a generic message urging users to unsubscribe is another red flag. Overall, the combination of impersonation, potential spoofing, use of urgency, and deceptive hyperlinks strongly indicates that this email is likely a phishing attempt.\"\n    }"
+    "predicted_label": "legitimate",
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email does not exhibit clear signs of phishing. While there are links included in the email body, they lead to a website related to the content discussed (Nessie pictures). The sender address, headers, and overall content do not attempt to impersonate well-known brands or create a sense of urgency for malicious purposes. The email seems to be a regular communication about Fortean Book Reviews and sharing interesting content about Nessie pictures. As a result, it is considered legitimate.\"\n}"
   },
   {
-    "result_id": 37,
+    "result_id": 17,
     "file": "0080.7c3a836baaa732cd915546442c0fef1a",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate based on the following analysis: \n    1. There is no impersonation of well-known brands in the email body.\n    2. The email header does not show clear signs of spoofing. The sender name matches the email address, and the subject line does not exhibit typical phishing characteristics like urgency or promises of rewards.\n    3. The email body does not contain any social engineering tactics to induce clicks on hyperlinks. The URLs provided are related to the legitimate services offered by D\u00e9ise Design, as mentioned in the email.\n    4. The content of the email focuses on discussing a common issue related to bounced emails, without prompting the recipient to take any suspicious actions.\n    5. In conclusion, based on the absence of phishing indicators and the coherent message presented, the email is deemed legitimate.\"\n}"
+    "response": "{\n        \"is_phishing\": 0,\n        \"analysis\": \"Based on the detailed analysis of the email contents, it appears to be legitimate and not a phishing email. There are no clear indications of impersonation of well-known brands, spoofing signs, or typical phishing characteristics in the header or subject line. The email body primarily discusses a common issue related to bounced emails and does not contain any social engineering tactics to induce clicks on suspicious links. The sender's information aligns with the email content and does not raise any red flags.\"\n    }\n    "
   },
   {
-    "result_id": 38,
-    "file": "0081.9d26c2d149545a1c5d23e2cd4dca1b5f",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate. There is no impersonation of well-known brands, and the email headers do not show any spoofing signs. The content of the email is related to technical issues with Razor-agent.log, which is typical for a discussion within a mailing list. The email does not contain any typical phishing characteristics such as urgency, reward promises, or deceptive links. The provided information is technical in nature and relevant to the mailing list topic. Therefore, this email does not exhibit any signs of phishing.\"\n}"
-  },
-  {
-    "result_id": 39,
-    "file": "0082.7f7858a1a7360410ed120899504c3a25",
-    "label": "legitimate",
-    "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"Based on the analysis of the email, there is no clear evidence of phishing activities. The email appears to be a legitimate technical discussion related to setting up audio equipment using ALSA. The sender addresses and headers seem consistent, and there are no overt signs of impersonation or spoofing. The content of the email focuses on troubleshooting sound configurations, providing tips, and sharing a Linux tip, which align with a technical discussion rather than phishing tactics. The embedded link leads to a legitimate Linux software download page, further supporting the legitimacy of the email. Therefore, it is assessed as a legitimate email with no phishing indicators.\"\n}"
-  },
-  {
-    "result_id": 40,
+    "result_id": 18,
     "file": "0083.e506d3273b3dde9ae2d340cb0197a2a0",
     "label": "legitimate",
     "predicted_label": "legitimate",
-    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate. There are no clear signs of impersonation of well-known brands in the email contents. The email header does not show any obvious spoofing signs, and the subject line does not contain typical phishing characteristics like urgency or promises of rewards. The email body consists of a genuine conversation related to ALSA installation and tips for Linux usage, showing no clear social engineering tactics to induce clicks on links. The provided URLs are related to Linux tips and mailing list subscriptions, which seem authentic and non-deceptive. Overall, the email does not exhibit common phishing red flags and seems to be a regular communication among tech enthusiasts.\"\n}"
+    "response": "{\n    \"is_phishing\": 0,\n    \"analysis\": \"The email appears to be legitimate. There are no clear indicators of phishing tactics observed in the email headers, sender information, subject line, or email body. The communication is a simple message of thanks related to RPMS availability and does not contain any elements typical of phishing emails, such as fake rewards, urgent requests, or deceptive links.\"\n}"
   }
 ]

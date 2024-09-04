@@ -17,18 +17,18 @@
             <div class="email-info">
                 <h2>Email information</h2>
                 <h3>Manual Email Entry</h3>
-                <form id="email-form">
-                    <label for="sender">Sender</label><br>
-                    <input type="text" id="sender" name="sender" placeholder="Placeholder"><br><br>
+                <!-- Removed form tag -->
+                <label for="sender">Sender</label><br>
+                <input type="text" id="sender" name="sender" placeholder="Placeholder"><br><br>
 
-                    <label for="subject">Subject</label><br>
-                    <input type="text" id="subject" name="subject" placeholder="Placeholder"><br><br>
+                <label for="subject">Subject</label><br>
+                <input type="text" id="subject" name="subject" placeholder="Placeholder"><br><br>
 
-                    <label for="email-body">Email Body</label><br>
-                    <textarea id="email-body" name="email-body" placeholder="Placeholder"></textarea><br><br>
-                </form>
+                <label for="email-body">Email Body</label><br>
+                <textarea id="email-body" name="email-body" placeholder="Placeholder"></textarea><br><br>
+
                 <h3>Upload .EML file</h3>
-                <button class="btn" onclick="uploadFile()">File</button>
+                <input type="file" id="file-input">
             </div>
             <div class="detection-method">
                 <h2>Detection method</h2>
@@ -41,13 +41,38 @@
         </div>
     </div>
     <script>
-        function uploadFile() {
-            alert("Upload File feature coming soon!");
-        }
+function detectPhishing() {
+    const formData = new FormData();
+    const method = document.getElementById('method').value;
 
-        function detectPhishing() {
-            alert("Detecting Phishing...");
-        }
-    </script>
+    // Add the detection method to the form data
+    formData.append('method', method);
+
+    // Check if the user uploaded a file
+    const fileInput = document.getElementById('file-input');
+    if (fileInput && fileInput.files.length > 0) {
+        formData.append('eml_file', fileInput.files[0]);
+    } else {
+        // Add manual entry data if no file was uploaded
+        formData.append('sender', document.getElementById('sender').value);
+        formData.append('subject', document.getElementById('subject').value);
+        formData.append('email_body', document.getElementById('email-body').value);
+    }
+
+    fetch('/detect', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Redirect to the results page with the result
+        window.location.href = `/results?result=${encodeURIComponent(data.result)}`;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+
 </body>
 </html>
