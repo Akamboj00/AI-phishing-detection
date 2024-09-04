@@ -59,20 +59,21 @@ function detectPhishing() {
         formData.append('email_body', document.getElementById('email-body').value);
     }
 
+    // Submit the form data using fetch and redirect to results page
     fetch('/detect', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        // Redirect to the results page with the result
-        window.location.href = `/results?result=${encodeURIComponent(data.result)}`;
+    .then(response => response.text())
+    .then(html => {
+        document.body.innerHTML = html; // Replace the current HTML with the new content
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 </script>
+
 
 </body>
 </html>

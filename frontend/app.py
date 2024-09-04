@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request, jsonify
 import os
 
@@ -41,19 +42,21 @@ def detect():
         if method == 'chatgpt-model':
             prompt = generate_prompt(headers, body)
             response = query_llm(prompt)
-            result = extract_label_from_response(response)
-        else:
-            result = "Other model selected."
+            print(f"Raw Model Response: {response}")  # Log the raw response for debugging
 
-        return jsonify({'result': result})
+            result = extract_label_from_response(response)
+            print(f"Extracted Result: {result}")  # Log the extracted result for verification
+
+            if result not in ["Legitimate", "Phishing"]:
+                result = "Unknown"  # Fallback to a default if extraction fails
+            analysis = response if isinstance(response, str) else response.get('analysis',
+                                                                               'No detailed analysis available.')
+
+        # Render the results page with the result and detailed analysis
+        return render_template('results.html', result=result, analysis=analysis)
 
     elif request.method == 'GET':
         return render_template('detect.html')
-
-@app.route('/results')
-def results():
-    result = request.args.get('result')
-    return render_template('results.html', result=result)
 
 if __name__ == '__main__':
     app.run(debug=True)

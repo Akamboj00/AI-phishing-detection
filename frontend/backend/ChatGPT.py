@@ -61,27 +61,32 @@ def parse_eml(file_path):
 
 def extract_label_from_response(response):
     try:
-        # Normalize and clean the response string
+        # If response is JSON-like, try to load it as JSON
+        if response.startswith('{') and response.endswith('}'):
+            response_data = json.loads(response)
+            is_phishing = response_data.get("is_phishing")
+            if is_phishing is not None:
+                return "Phishing" if is_phishing == 1 else "Legitimate"
+
+        # If response is a plain string, try to parse it with regex
         response = response.strip().lower()
 
-        # Look for the "is_phishing" field and its value
+        # Look for the "is_phishing" field and its value in the string
         match = re.search(r'"is_phishing"\s*:\s*(\d+)', response)
-
         if match:
             is_phishing = int(match.group(1))
-            return "phishing" if is_phishing == 1 else "legitimate"
-        else:
-            # Handle cases where "is_phishing" isn't found directly
-            if "phishing" in response:
-                return "phishing"
-            elif "legitimate" in response:
-                return "legitimate"
-            else:
-                return "error"  # If the response is unclear, return an error label
+            return "Phishing" if is_phishing == 1 else "Legitimate"
 
+        # Alternatively, check for direct keywords in the response
+        if "phishing" in response:
+            return "Phishing"
+        elif "legitimate" in response:
+            return "Legitimate"
+        else:
+            return "Unknown"  # If the response is unclear, return "Unknown"
     except Exception as e:
         print(f"Unexpected error: {e}")
-        return "error"
+        return "Unknown"
 
 
 def process_eml_files_in_directory(directory_path, label, results, start_count, true_labels, predicted_labels):
