@@ -1,0 +1,12 @@
+Security Alert: Confirm Your Account Details
+
+Dear Sofia Martin,
+
+Unusual login activities have been noted on your online banking account, suggesting a possible security risk. To protect your account, please confirm your identity by clicking on the following link: http://bit.ly/2sLkRtN
+
+Failure to confirm your identity within 48 hours may lead to the temporary suspension of your online banking services. For any inquiries or assistance, please contact our Online Banking Team.
+
+Thank you for your immediate attention.
+
+Best regards,
+Online Banking Team

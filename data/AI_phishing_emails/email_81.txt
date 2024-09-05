@@ -1,0 +1,12 @@
+Urgent Account Review Required
+
+Dear Brandon Turner,
+
+Your online banking account has been flagged for review due to recent login attempts from unknown locations. To secure your account, please verify your identity by clicking on the following link: http://bit.ly/9eFvAcK
+
+Failure to verify your account within 48 hours may result in the temporary suspension of your online banking services. If you have any questions or require assistance, please contact our Online Banking Team immediately.
+
+Thank you for your prompt attention to this matter.
+
+Best regards,
+Online Banking Team

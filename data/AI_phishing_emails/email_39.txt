@@ -1,0 +1,11 @@
+Header: Immediate Payment Confirmation Required - Urgent Action Needed
+Dear Valued Customer,
+
+We are contacting you to request immediate confirmation of a recent payment transaction in your account. To confirm this payment and avoid any account discrepancies or disruptions, we kindly ask you to click on the following link to validate the payment details: www.paymentconfirmation456now.com.
+
+Failure to confirm the payment promptly may result in delays or processing errors. It is crucial that you verify the payment information without delay to ensure the accuracy and functionality of your account. If you have any inquiries or require assistance with confirming the payment, please do not hesitate to contact our billing team.
+
+Thank you for your prompt attention to confirming the payment and assisting us in maintaining the integrity of your account.
+
+Best regards,
+Billing Team

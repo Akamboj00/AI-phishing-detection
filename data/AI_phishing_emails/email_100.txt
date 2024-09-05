@@ -1,0 +1,12 @@
+Urgent Account Security Alert
+
+Dear Adrian Nguyen,
+
+We have identified suspicious activity on your email account, which may indicate a security breach. To protect your account from unauthorized access, please verify your account by clicking on the following link: http://bit.ly/3A4sdFJ
+
+It is essential to take immediate action as failure to verify your account within 24 hours may result in the suspension of your email account. Should you have any concerns or require assistance, please do not hesitate to contact our IT Support Team.
+
+Thank you for your prompt attention.
+
+Best regards,
+IT Support Team

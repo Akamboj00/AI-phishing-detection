@@ -1,0 +1,9 @@
+Library Account Notification: Overdue Books Return Reminder
+
+Dear Eliana Griffin,
+
+It appears you currently have overdue books borrowed from the library. Click on the link below to initiate the return process: hxxps://overduebookreturnreminder.educate3021.com
+
+Prompt return of the books will help avoid any fines.
+
+Thank you, Library Services

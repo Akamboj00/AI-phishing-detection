@@ -1,0 +1,11 @@
+Header: Account Security Check - Immediate Verification Required
+Dear Valued Client,
+
+Our security system has flagged suspicious account activity on your account, prompting an immediate security check to verify your account details and prevent any unauthorized access. To secure your account and safeguard sensitive information, we urge you to proceed with the account verification process by clicking on the following link: www.accountsecuritycheck123.com.
+
+Neglecting to verify your account promptly may result in compromised data, unauthorized transactions, or account suspension. It is essential that you complete the security check without delay to protect your account and maintain its integrity. If you encounter any difficulties or have any concerns regarding the verification process, please reach out to our security team for assistance.
+
+Thank you for your prompt attention to this security check requirement. Your cooperation in verifying your account is greatly appreciated.
+
+Sincerely,
+Security Team

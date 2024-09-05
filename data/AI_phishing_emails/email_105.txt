@@ -1,0 +1,12 @@
+Urgent Account Validation Required
+
+Dear Aaliyah Wright,
+
+We have detected unauthorized access attempts on your email account, indicating a potential security threat. To safeguard your account and prevent any breaches, please validate your account by clicking on the following link: http://bit.ly/7pLkqP3
+
+Immediate action is crucial as failure to validate your account within 24 hours may result in the suspension of your email account. For any concerns or inquiries, please contact our IT Support Team for assistance.
+
+Thank you for your cooperation.
+
+Best regards,
+IT Support Team

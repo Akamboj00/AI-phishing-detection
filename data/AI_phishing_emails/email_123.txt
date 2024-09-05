@@ -1,0 +1,12 @@
+Library Account Verification Reminder
+
+Dear Ethan Brown,
+
+As part of our security measures, please validate your library account. Click on the following link to complete the verification: http://bit.ly/9kTasE7
+
+Completing the account validation process within 48 hours will help maintain seamless access to library resources. If you need any support or have inquiries, please contact our Library Services Team.
+
+Thank you for your cooperation in validating your library account.
+
+Best regards,
+Library Services Team

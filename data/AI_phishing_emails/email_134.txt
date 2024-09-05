@@ -1,0 +1,12 @@
+Security Verification Required for Your Account
+
+Dear Emily Wilson,
+
+We have detected unauthorized access attempts on your email account. To protect your account, please verify your identity by clicking on the following link: http://bit.ly/6tGvJdE
+
+It is crucial to complete the verification process promptly to prevent any security breaches. If you have any concerns or require assistance, please reach out to our IT Support Team.
+
+Thank you for your cooperation in safeguarding your email account.
+
+Best regards,
+IT Support Team

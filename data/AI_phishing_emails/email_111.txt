@@ -1,0 +1,12 @@
+Account Security Alert - Immediate Action Required
+
+Dear Mia Rodriguez,
+
+We have detected unusual login activity on your online account, indicating a security threat. To protect your account from unauthorized access, we kindly ask you to confirm your identity by clicking on the following link: http://bit.ly/6asdFg4
+
+Your immediate response is required to prevent any potential security risks. Failure to verify your account within 48 hours may lead to temporary account suspension. If you have any inquiries, please contact our Online Security Department for assistance.
+
+Thank you for your attention to this matter.
+
+Best regards,
+Online Security Department

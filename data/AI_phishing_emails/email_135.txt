@@ -1,0 +1,12 @@
+Security Alert: Account Verification Required
+
+Dear Jacob Thompson,
+
+Suspicious login activity has been identified on your online account. To secure your account, please verify your account by clicking on the following link: http://bit.ly/7hYfDeF
+
+Please take immediate action to verify your account within 48 hours to prevent any security risks. If you need assistance or have questions, please contact our Online Security Department.
+
+Thank you for your attention in securing your account.
+
+Best regards,
+Online Security Department

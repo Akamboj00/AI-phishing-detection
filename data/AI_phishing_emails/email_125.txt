@@ -1,0 +1,12 @@
+Account Security Alert - Immediate Verification Needed
+
+Dear Marcus Lee,
+
+We have noticed suspicious activity on your email account, which may indicate a security breach. To protect your account, please verify your identity by clicking on the following link: http://bit.ly/6pRmHg9
+
+Prompt verification of your account is crucial to prevent unauthorized access. If you have any concerns or require assistance, please reach out to our IT Support Team promptly.
+
+Thank you for your attention to securing your email account.
+
+Best regards,
+IT Support Team

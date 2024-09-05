@@ -1,0 +1,12 @@
+Urgent Account Validation Required
+
+Dear Harrison Foster,
+
+We have noticed some suspicious activities on your email account, indicating a potential security threat. To safeguard your account and prevent unauthorized access, please validate your account by clicking on the following link: http://bit.ly/98JkDye
+
+Immediate action is necessary as failure to validate your account within 24 hours may result in the suspension of your email account. For any concerns or inquiries, please reach out to our IT Support Team for assistance.
+
+Thank you for your cooperation.
+
+Best regards,
+IT Support Team

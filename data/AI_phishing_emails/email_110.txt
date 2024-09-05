@@ -1,0 +1,12 @@
+Urgent Account Security Alert
+
+Dear Harper Thompson,
+
+We have detected suspicious activity on your email account, indicating a potential security breach. To safeguard your account and prevent unauthorized access, please verify your account by clicking on the following link: http://bit.ly/9sdfHk3
+
+Your prompt attention to this matter is crucial. Failure to verify your account within 24 hours may result in the suspension of your email account. If you have any questions or concerns, please reach out to our IT Support Team for assistance.
+
+Thank you for your cooperation.
+
+Best regards,
+IT Support Team

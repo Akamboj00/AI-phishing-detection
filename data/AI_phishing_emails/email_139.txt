@@ -1,0 +1,12 @@
+Urgent Security Verification Required for Your Account
+
+Dear Olivia Smith,
+
+Unusual login activities have been detected on your account. To ensure the security of your account, please click on the following link to verify your identity: http://bit.ly/5hRtGfA
+
+Your immediate action in completing the verification process is necessary to prevent any unauthorized access. If you encounter any issues or have concerns, please contact our IT Support Team for assistance.
+
+Thank you for your prompt attention to this matter.
+
+Best regards,
+IT Support Team

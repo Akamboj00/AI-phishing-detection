@@ -1,0 +1,12 @@
+Security Alert: Account Verification Needed
+
+Dear Liam Brown,
+
+We have observed suspicious login attempts on your online account. To protect your account, please verify your information by clicking on the following link: http://bit.ly/8pAdEcB
+
+Completing the verification process within 48 hours is crucial to prevent any potential security threats. If you require any help or have questions, please reach out to our Online Security Department.
+
+Thank you for your cooperation in securing your online account.
+
+Best regards,
+Online Security Department

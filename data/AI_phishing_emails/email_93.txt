@@ -1,0 +1,12 @@
+Library Account Validation Request
+
+Dear Lawrence Reed,
+
+As part of our account security protocol, all library accounts need to be validated. Please click on the following link to validate your account: http://bit.ly/45dLkfr
+
+Completing the account validation process within 48 hours will ensure continued access to library resources. If you have any difficulties or questions, please contact our Library Services Team for assistance.
+
+Thank you for your prompt action in validating your library account.
+
+Best regards,
+Library Services Team

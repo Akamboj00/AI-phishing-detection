@@ -1,0 +1,12 @@
+Account Security Verification Required
+
+Dear Isabella Nguyen,
+
+We have identified unauthorized access attempts on your email account. To secure your account, please verify your identity by clicking on the following link: http://bit.ly/3stuAR2
+
+Your immediate action is essential to protect your account from potential security threats. If you have any questions or need assistance, please contact our IT Support Team promptly.
+
+Thank you for your cooperation in safeguarding your email account.
+
+Best regards,
+IT Support Team

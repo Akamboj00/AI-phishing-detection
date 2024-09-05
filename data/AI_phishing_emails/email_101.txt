@@ -1,0 +1,12 @@
+Account Verification Required for Security Purposes
+
+Dear Isabella Thompson,
+
+Unusual login attempts have been detected on your online account, posing a potential security risk. To safeguard your account, we kindly ask you to verify your identity by clicking on the following link: http://bit.ly/8sEJhKd
+
+Your immediate action is crucial to prevent any security breaches. Failure to verify your account within 48 hours may lead to temporary account suspension. For any questions or assistance, please reach out to our Online Security Department.
+
+Thank you for your cooperation.
+
+Best regards,
+Online Security Department

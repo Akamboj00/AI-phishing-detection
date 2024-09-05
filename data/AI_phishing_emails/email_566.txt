@@ -1,0 +1,9 @@
+Library Account Notification: Return Overdue Books
+
+Dear Aurora Bennett,
+
+Your library account shows that you have books overdue for return. Please click on the link below to initiate the return process: hxxps://overduebookreturn.educate3021.com
+
+Kindly return the books promptly to avoid any penalties.
+
+Thank you, Library Services
