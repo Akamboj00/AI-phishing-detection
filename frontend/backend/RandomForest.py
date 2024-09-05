@@ -57,7 +57,7 @@ def train_and_evaluate_model(model, X_train, X_test, y_train, y_test, model_path
     plt.show()
 
 if __name__ == "__main__":
-    filepath = r'/Code/AI-phishing-detection/output/combined_email_features.csv'  # Provide the correct path to your dataset
+    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'  # Provide the correct path to your dataset
     model_path = 'trained_models/random_forest_model.pkl'
 
     # Load, preprocess data, and split into training and test sets

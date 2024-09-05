@@ -146,6 +146,8 @@ class EmailFeatureExtractor:
         df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
         return df
 
+
+
     def save_combined_csv(self, phishing_dir, legitimate_dir, csv_file_path):
         """
         Processes both phishing and legitimate email directories and saves the combined features to a CSV file.
@@ -163,6 +165,47 @@ class EmailFeatureExtractor:
         combined_df.to_csv(csv_file_path, index=False)
         print(f"Combined TF-IDF features and labels saved to {csv_file_path}")
 
+    def extract_features_from_plain_text(self, text):
+        """
+        Extracts TF-IDF features from a plain text string.
+        :param text: Plain text from which to extract features.
+        :return: DataFrame containing TF-IDF features for the text.
+        """
+        if not text:
+         raise ValueError("The text is empty. Ensure there is valid content to process.")
+
+         # Transform the plain text using the already initialized vectorizer
+         tfidf_features = self.vectorizer.transform([text])
+         dense_features = tfidf_features.toarray()
+
+         # Convert to DataFrame
+         df = pd.DataFrame(dense_features, columns=[f'term_{i}' for i in range(dense_features.shape[1])])
+         return df
+
+    def process_plain_text_directory(self, directory_path, output_csv_path):
+        email_bodies = []
+        for filename in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            if file_path.endswith('.txt'):
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        text = file.read()
+                    if text.strip():
+                        email_bodies.append(text.strip())
+                    else:
+                        print(f"Warning: Empty text file {filename}. Skipping...")
+                except Exception as e:
+                    print(f"Error processing file {filename}: {e}. Skipping...")
+
+        if not email_bodies:
+            raise ValueError("No valid text files found in the directory.")
+
+        tfidf_matrix = self.vectorizer.fit_transform(email_bodies)
+        feature_names = self.vectorizer.get_feature_names_out()
+        df = pd.DataFrame(tfidf_matrix.toarray(), columns=feature_names)
+        df.to_csv(output_csv_path, index=False)
+        print(f"TF-IDF features saved to {output_csv_path}")
+
 
 if __name__ == "__main__":
     # Paths for directories used in combined CSV creation
@@ -177,14 +220,20 @@ if __name__ == "__main__":
     # extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv)
 
     # Path for the single email to be processed
-    single_email_path = r'/Code/AI-phishing-detection/data/testing_datasets/combined_spam_ham_eml/phishing_emails/sample-10.eml'
+    single_email_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\testing_datasets\train_spam_ham_eml\legitimate_emails\0001.f0cf04027e74802f09f723cb8916b48e'
 
     # Path to save the TF-IDF features from the single email
-    single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\backend\temp_email_features.csv'
+    single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\frontend\backend\temp_email_features.csv'
 
-    # Process the single email and extract features
+    # Process the single email and extract feature
     single_email_features_df = extractor.process_single_email(single_email_path)
 
-    # Save the features to the specified CSV file
+    #Save the features to the specified CSV file
     single_email_features_df.to_csv(single_email_output_csv, index=False)
     print(f"TF-IDF features for the single email saved to {single_email_output_csv}")
+
+
+    ##PLAINTEXT DIR
+    #directory_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\AI_phishing_emails'
+    #output_csv_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\AI_emails_features.csv'
+    #extractor.process_plain_text_directory(directory_path, output_csv_path)

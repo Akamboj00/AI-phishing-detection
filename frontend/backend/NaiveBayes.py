@@ -1,12 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.naive_bayes import GaussianNB
 from scipy.sparse import csr_matrix
 from sklearn.impute import SimpleImputer
-
+import joblib
 
 def load_and_preprocess_data(filepath):
     df = pd.read_csv(filepath)
@@ -21,13 +21,23 @@ def load_and_preprocess_data(filepath):
 
     return train_test_split(X, y, test_size=0.3, random_state=42)
 
+def train_and_evaluate_model(model, X_train, X_test, y_train, y_test, model_path):
+    # Perform cross-validation
+    cv_scores = cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
+    print(f"Cross-validation scores: {cv_scores}")
+    print(f"Mean CV accuracy: {cv_scores.mean():.4f}")
 
-def train_and_evaluate_model(model, X_train, X_test, y_train, y_test):
+    # Train the model on the entire training set
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 
+    # Save the trained model
+    joblib.dump(model, model_path)
+    print(f"Model saved to {model_path}")
+
+    # Evaluate the model on the test set
     accuracy = accuracy_score(y_test, y_pred)
-    print(f"\nAccuracy: {accuracy:.2f}")
+    print(f"\nTest Set Accuracy: {accuracy:.2f}")
 
     report = classification_report(y_test, y_pred, output_dict=True)
     df_report = pd.DataFrame(report).transpose()
@@ -47,9 +57,9 @@ def train_and_evaluate_model(model, X_train, X_test, y_train, y_test):
     plt.tight_layout()
     plt.show()
 
-
 if __name__ == "__main__":
-    filepath = '../../output/combined_email_features.csv'
+    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'
+    model_path = 'trained_models/naive_bayes_model.pkl'
     X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)
     nb_model = GaussianNB()
-    train_and_evaluate_model(nb_model, X_train, X_test, y_train, y_test)
+    train_and_evaluate_model(nb_model, X_train, X_test, y_train, y_test, model_path)
