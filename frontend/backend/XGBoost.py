@@ -58,7 +58,7 @@ def train_and_evaluate_model(model, X_train, X_test, y_train, y_test, model_path
     plt.show()
 
 if __name__ == "__main__":
-    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\combined_email_features.csv'
+    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\AI_and_legit.csv'
     model_path = 'trained_models/xgboost_model.pkl'
     X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)
     xgb_model = xgb.XGBClassifier(n_estimators=100, random_state=42)

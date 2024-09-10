@@ -25,7 +25,7 @@ def predict_single_email(model, single_email_features):
 
 
 if __name__ == "__main__":
-    model_choice = 'naive_bayes'  # Can be 'random_forest', 'naive_bayes', or 'xgboost'
+    model_choice = 'random_forest'  # Can be 'random_forest', 'naive_bayes', or 'xgboost'
 
     if model_choice == 'random_forest':
         model_path = 'trained_models/random_forest_model.pkl'
