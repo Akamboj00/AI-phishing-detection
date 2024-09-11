@@ -25,7 +25,9 @@ def predict_single_email(model, single_email_features):
 
 
 if __name__ == "__main__":
-    model_choice = 'random_forest'  # Can be 'random_forest', 'naive_bayes', or 'xgboost'
+    #model_choice = 'random_forest'  # Can be 'random_forest', 'naive_bayes', or 'xgboost'
+    #model_choice = 'naive_bayes'
+    model_choice = 'xgboost'
 
     if model_choice == 'random_forest':
         model_path = 'trained_models/random_forest_model.pkl'
@@ -34,7 +36,7 @@ if __name__ == "__main__":
     elif model_choice == 'xgboost':
         model_path = 'trained_models/xgboost_model.pkl'
 
-    single_email_csv_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\frontend\backend\temp_email_features.csv'
+    single_email_csv_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\single_tests\single5.csv'
 
     model = load_model_and_vectorizer(model_path)
     single_email_df = pd.read_csv(single_email_csv_path)
