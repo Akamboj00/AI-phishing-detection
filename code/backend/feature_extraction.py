@@ -156,13 +156,11 @@ class EmailFeatureExtractor:
     def save_combined_csv(self, phishing_dir, legitimate_dir, csv_file_path, vectorizer_path):
         """
         Processes both phishing and legitimate email directories and saves the combined features to a CSV file.
-        Also saves the fitted vectorizer for future use.
-
-        :param phishing_dir: Path to the directory containing phishing emails.
-        :param legitimate_dir: Path to the directory containing legitimate emails.
-        :param csv_file_path: Path to the output CSV file.
-        :param vectorizer_path: Path to save the fitted vectorizer.
+        Loads the pre-fitted vectorizer to ensure consistent feature extraction.
         """
+        # Load the pre-fitted vectorizer
+        self.vectorizer = joblib.load(vectorizer_path)
+
         # Process the directories to get email bodies and labels
         phishing_df = self.process_directory(phishing_dir, label=1)
         legitimate_df = self.process_directory(legitimate_dir, label=0)
@@ -170,13 +168,9 @@ class EmailFeatureExtractor:
         # Combine phishing and legitimate data
         combined_df = pd.concat([phishing_df, legitimate_df], ignore_index=True)
 
-        # Now we can access the 'body' column to fit the vectorizer
-        email_bodies = combined_df['body'].tolist()  # This will now work correctly
-        tfidf_features = self.vectorizer.fit_transform(email_bodies)
-
-        # Save the fitted vectorizer
-        joblib.dump(self.vectorizer, vectorizer_path)
-        print(f"Vectorizer saved to {vectorizer_path}")
+        # Extract features using the pre-fitted vectorizer
+        email_bodies = combined_df['body'].tolist()
+        tfidf_features = self.vectorizer.transform(email_bodies)
 
         # Create a DataFrame with the TF-IDF features and labels
         feature_df = pd.DataFrame(tfidf_features.toarray(),
@@ -230,31 +224,31 @@ class EmailFeatureExtractor:
 
 
 if __name__ == "__main__":
-    vectorizer_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\frontend\backend\trained_models/vectorizer.pkl'
+    vectorizer_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\vectorizer.pkl'
 
     # Paths for directories used in combined CSV creation
-    #phishing_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\AI_generated_legit_phishing\phishing_emails'
-    #legitimate_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\AI_generated_legit_phishing\legitimate_emails'
-    #output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\AI_and_legit.csv'
+    phishing_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\phishing_emails'
+    legitimate_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\legitimate_emails'
+    output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\predictions.csv'
 
     # Initialize the feature extractor
     extractor = EmailFeatureExtractor()
 
     # Create the combined CSV for training data
-    #extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv, vectorizer_path)
+    extractor.save_combined_csv(phishing_dir, legitimate_dir, output_csv, vectorizer_path)
 
     # Path for the single email to be processed
-    single_email_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\AI_generated_legit_phishing\legitimate_emails\00038.a5f3ff0736ac35b3102c6712ffed9a60'
+    #single_email_path = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\AI_generated_legit_phishing\legitimate_emails\00038.a5f3ff0736ac35b3102c6712ffed9a60'
 
     #Path to save the TF-IDF features from the single email
-    single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\single_tests\single5.csv'
+    #single_email_output_csv = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\single_tests\single5.csv'
 
     #Process the single email and extract feature
-    single_email_features_df = extractor.process_single_email(single_email_path, vectorizer_path)
+    #single_email_features_df = extractor.process_single_email(single_email_path, vectorizer_path)
 
     #Save the features to the specified CSV file
-    single_email_features_df.to_csv(single_email_output_csv, index=False)
-    print(f"TF-IDF features for the single email saved to {single_email_output_csv}")
+    #single_email_features_df.to_csv(single_email_output_csv, index=False)
+    #print(f"TF-IDF features for the single email saved to {single_email_output_csv}")
 
 
     ##PLAINTEXT DIR

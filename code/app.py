@@ -2,7 +2,7 @@ import json
 from flask import Flask, render_template, request, jsonify
 import os
 
-# Directly import from backend as it's now within the frontend directory
+# Directly import from backend as it's now within the code directory
 from backend.ChatGPT import parse_eml, generate_prompt, query_llm, extract_label_from_response
 
 app = Flask(__name__)
