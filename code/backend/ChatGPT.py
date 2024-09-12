@@ -11,7 +11,7 @@ client = OpenAI()
 
 def query_llm(prompt):
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are an email spam detector."},
             {"role": "user", "content": prompt}
@@ -41,7 +41,7 @@ def generate_prompt(headers, body):
 
     4. Provide a comprehensive evaluation of the email, highlighting specific elements that support your conclusion. Include a detailed explanation of any phishing or legitimacy indicators found in the email.
 
-    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered. Return the result using the following format:
+    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered. Return the result using the following format (It is very important that you ALWAYS use this format):
 
     {{
         "is_phishing": 1, # Use 1 if the email is phishing, 0 if it is legitimate
@@ -66,7 +66,7 @@ def extract_label_from_response(response):
             response_data = json.loads(response)
             is_phishing = response_data.get("is_phishing")
             if is_phishing is not None:
-                return "Phishing" if is_phishing == 1 else "Legitimate"
+                return "phishing" if is_phishing == 1 else "legitimate"
 
         # If response is a plain string, try to parse it with regex
         response = response.strip().lower()
@@ -75,13 +75,13 @@ def extract_label_from_response(response):
         match = re.search(r'"is_phishing"\s*:\s*(\d+)', response)
         if match:
             is_phishing = int(match.group(1))
-            return "Phishing" if is_phishing == 1 else "Legitimate"
+            return "phishing" if is_phishing == 1 else "legitimate"
 
         # Alternatively, check for direct keywords in the response
         if "phishing" in response:
-            return "Phishing"
+            return "phishing"
         elif "legitimate" in response:
-            return "Legitimate"
+            return "legitimate"
         else:
             return "Unknown"  # If the response is unclear, return "Unknown"
     except Exception as e:
@@ -101,6 +101,8 @@ def process_eml_files_in_directory(directory_path, label, results, start_count, 
             prompt = generate_prompt(headers, body)
             response = query_llm(prompt)
             predicted_label = extract_label_from_response(response)
+
+            # Add to results and labels only if no errors occurred
             true_labels.append(label)
             predicted_labels.append(predicted_label)
             results.append({
@@ -111,8 +113,13 @@ def process_eml_files_in_directory(directory_path, label, results, start_count, 
                 "response": response
             })
             count += 1  # Increment the counter after each file
+
+        except json.decoder.JSONDecodeError as json_error:
+            print(f"JSON decode error in {file_path}: {json_error}. Skipping....")
+            # Skipping this email from evaluation and moving on
+
         except Exception as e:
-            print(f"Failed to process {file_path}: {e}")
+            print(f"Failed to process {file_path}: {e} Skipping...")
             results.append({
                 "result_id": count,  # Add the counter even in case of an error
                 "file": filename,
@@ -124,21 +131,22 @@ def process_eml_files_in_directory(directory_path, label, results, start_count, 
 
     return count  # Return the current count
 
+
 def calculate_metrics(true_labels, predicted_labels):
     accuracy = accuracy_score(true_labels, predicted_labels)
-    precision = precision_score(true_labels, predicted_labels, average='weighted')
-    recall = recall_score(true_labels, predicted_labels, average='weighted')
-    f1 = f1_score(true_labels, predicted_labels, average='weighted')
-    report = classification_report(true_labels, predicted_labels, labels=["phishing", "legitimate"])
+    precision = precision_score(true_labels, predicted_labels, average='weighted', zero_division=1)
+    recall = recall_score(true_labels, predicted_labels, average='weighted', zero_division=1)
+    f1 = f1_score(true_labels, predicted_labels, average='weighted', zero_division=1)
+    report = classification_report(true_labels, predicted_labels, labels=["phishing", "legitimate"], zero_division=1)
     return accuracy, precision, recall, f1, report
 
 def main():
-    phishing_dir = r'/Code/AI-phishing-detection/data/testing_datasets/combined_spam_ham_eml/phishing_emails'
+    phishing_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\Chatgpt\phishing_emails'
 
-    legitimate_dir = r'/Code/AI-phishing-detection/data/testing_datasets/combined_spam_ham_eml/legitimate_emails'
+    legitimate_dir = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\Chatgpt\legitimate_emails'
 
     # Output file to save results
-    output_file = r'/Code/AI-phishing-detection/output/testing/results.json'
+    output_file = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\testing\results.json'
 
     # Initialize results list and label lists
     results = []
