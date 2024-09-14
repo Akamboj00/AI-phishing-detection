@@ -41,7 +41,7 @@ def generate_prompt(headers, body):
 
     4. Provide a comprehensive evaluation of the email, highlighting specific elements that support your conclusion. Include a detailed explanation of any phishing or legitimacy indicators found in the email.
 
-    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered. Return the result using the following format (It is very important that you ALWAYS use this format):
+    5. Summarize your findings and provide your final verdict on the legitimacy of the email, supported by the evidence you gathered. Return the result using the following format:
 
     {{
         "is_phishing": 1, # Use 1 if the email is phishing, 0 if it is legitimate
@@ -60,34 +60,11 @@ def parse_eml(file_path):
 
 
 def extract_label_from_response(response):
-    try:
-        # If response is JSON-like, try to load it as JSON
-        if response.startswith('{') and response.endswith('}'):
-            response_data = json.loads(response)
-            is_phishing = response_data.get("is_phishing")
-            if is_phishing is not None:
-                return "phishing" if is_phishing == 1 else "legitimate"
-
-        # If response is a plain string, try to parse it with regex
-        response = response.strip().lower()
-
-        # Look for the "is_phishing" field and its value in the string
-        match = re.search(r'"is_phishing"\s*:\s*(\d+)', response)
-        if match:
-            is_phishing = int(match.group(1))
-            return "phishing" if is_phishing == 1 else "legitimate"
-
-        # Alternatively, check for direct keywords in the response
-        if "phishing" in response:
-            return "phishing"
-        elif "legitimate" in response:
-            return "legitimate"
-        else:
-            return "Unknown"  # If the response is unclear, return "Unknown"
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        return "Unknown"
-
+    # Check if the exact sentence '"is_phishing": 1' is in the response
+    if '"is_phishing": 1' in response:
+        return "phishing"
+    else:
+        return "legitimate"
 
 def process_eml_files_in_directory(directory_path, label, results, start_count, true_labels, predicted_labels):
     count = start_count  # Start the counter from the provided start_count value

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Metrics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px; /* Restrict maximum width */
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center; /* Center the content */
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for each model */
+            grid-gap: 20px;
+            justify-items: center; /* Center each grid item */
+            justify-content: center;
+        }
+
+        .model-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 750px; /* Restrict the width of each model section */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px; /* Make the font smaller */
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        .accuracy-row td {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .charts-section img {
+            width: 90%;  /* Adjust width for better scaling */
+            max-width: 300px; /* Set maximum width to prevent large images */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-button a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Model Performance Metrics</h1>
+
+        <div class="metrics-grid">
+            {% for model, report in metrics.items() %}
+            <div class="model-section">
+                <h2>{{ model|capitalize }}</h2>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1-score</th>
+                        <th>Support</th>
+                    </tr>
+                    {% for label, data in report.items() if label in ['0', '1'] %}
+                    <tr>
+                        <td>{{ label }}</td>
+                        <td>{{ data['precision'] }}</td>
+                        <td>{{ data['recall'] }}</td>
+                        <td>{{ data['f1-score'] }}</td>
+                        <td>{{ data['support'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="accuracy-row">
+                        <td>Accuracy</td>
+                        <td colspan="4">{{ report['accuracy'] }}</td>
+                    </tr>
+                </table>
+
+                <!-- Embed the generated charts -->
+                <div class="charts-section">
+                    <img src="{{ url_for('static', filename='confusion_matrix_{}.png'.format(model)) }}" alt="Confusion Matrix for {{ model }}">
+                    <img src="{{ url_for('static', filename='roc_curve_{}.png'.format(model)) }}" alt="ROC Curve for {{ model }}">
+                    {% if model == 'random_forest' or model == 'xgboost' %}
+                    <img src="{{ url_for('static', filename='feature_importance_{}.png'.format(model)) }}" alt="Feature Importance for {{ model }}">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="back-button">
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
