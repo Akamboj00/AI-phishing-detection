@@ -1,89 +1,120 @@
 import pandas as pd
-from sklearn.metrics import accuracy_score, classification_report
-import joblib
 import numpy as np
+import joblib
+from sklearn.metrics import accuracy_score, classification_report
 
-# Load and preprocess the data for predictions (no labels)
-def load_data_for_predictions(filepath, expected_features):
-    df = pd.read_csv(filepath)
 
-    # Ensure the dataset has the same features as the training dataset
-    actual_features = list(df.columns)
-    missing_features = list(set(expected_features) - set(actual_features))
+# Function to load all models once and reuse them
+def load_models():
+    rf_model = joblib.load(r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\random_forest_model.pkl')
+    xgb_model = joblib.load(r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\xgboost_model.pkl')
+    nb_model = joblib.load(r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\naive_bayes_model.pkl')
+    svm_model = joblib.load(r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\svm_model.pkl')
+    return rf_model, xgb_model, nb_model, svm_model
+
+
+# Helper function to process data for predictions (used for both single and batch)
+def prepare_features(single_or_batch_data, expected_features):
+    if isinstance(single_or_batch_data, pd.DataFrame):
+        df = single_or_batch_data
+    else:
+        df = pd.DataFrame([single_or_batch_data], columns=expected_features)
 
     # Fill missing features with 0
+    missing_features = list(set(expected_features) - set(df.columns))
     if missing_features:
         for feature in missing_features:
             df[feature] = 0
 
     # Ensure the features are in the correct order
     df = df[expected_features]
-
     return df.values
 
-if __name__ == "__main__":
-    # Filepath to your predictions dataset (with true labels)
-    pred_filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\predictions.csv'
 
-    # Expected feature columns (make sure this matches your training data)
+# Function to handle ensemble prediction (same logic for both single and batch)
+def ensemble_predict(features, models):
+    rf_model, xgb_model, nb_model, svm_model = models
+
+    # Get probability predictions from each model
+    rf_pred_prob = rf_model.predict_proba(features)[:, 1]
+    xgb_pred_prob = xgb_model.predict_proba(features)[:, 1]
+    nb_pred_prob = nb_model.predict_proba(features)[:, 1]
+    svm_pred_prob = svm_model.decision_function(features)
+
+
+    # Weights for the models
+    weights = {
+        'rf': 0.25,
+        'xgb': 0.5,
+        'nb': 0.1,
+        'svm': 0.5,
+    }
+
+    # Adjust threshold to 0.6
+    threshold = 0.6
+
+    # Combine the predictions using weighted average (soft voting)
+    combined_prob = (weights['rf'] * rf_pred_prob +
+                     weights['xgb'] * xgb_pred_prob +
+                     weights['nb'] * nb_pred_prob +
+                     weights['svm'] * svm_pred_prob)
+
+    # Convert probabilities to binary predictions using the adjusted threshold
+    predictions = (combined_prob > threshold).astype(int)
+    return predictions
+
+
+# Batch prediction function for testing
+def batch_prediction(filepath, expected_features, models):
+    # Load the dataset
+    df = pd.read_csv(filepath)
+
+    # Prepare the features
+    X_pred = prepare_features(df, expected_features)
+
+    # Get predictions from the ensemble model
+    y_pred = ensemble_predict(X_pred, models)
+
+    # Load the true labels for evaluation
+    true_labels = df['label'].values
+
+    # Calculate accuracy and classification report
+    accuracy = accuracy_score(true_labels, y_pred)
+    report = classification_report(true_labels, y_pred)
+
+    print(f"Accuracy: {accuracy:.4f}")
+    print("Classification Report:")
+    print(report)
+
+
+# Single email prediction function for frontend (now from CSV)
+def single_email_prediction_from_csv(csv_filepath, expected_features, models):
+    # Load the features for a single email from a CSV file
+    df = pd.read_csv(csv_filepath)
+
+    # Prepare the single email features
+    email_features_prepared = prepare_features(df.iloc[0], expected_features)
+
+    # Get prediction from the ensemble model
+    prediction = ensemble_predict(email_features_prepared, models)
+
+    # Return phishing (1) or legitimate (0) result
+    return prediction[0]  # Since it's a single email, return the first (and only) prediction
+
+
+if __name__ == "__main__":
+    # Expected features (ensure this matches your training data)
     expected_features = [f'term_{i}' for i in range(500)]
 
-    # Load the prediction dataset
-    X_pred = load_data_for_predictions(pred_filepath, expected_features)
+    # Load models only once
+    models = load_models()
 
-    # Load the pre-trained models
-    rf_model = joblib.load('trained_models/random_forest_model.pkl')
-    xgb_model = joblib.load('trained_models/xgboost_model.pkl')
-    nb_model = joblib.load('trained_models/naive_bayes_model.pkl')
+    # Example: Batch prediction for testing
+    batch_filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\predictions.csv'
+    # Uncomment the line below for batch prediction
+    batch_prediction(batch_filepath, expected_features, models)
 
-    # Get probability predictions from each model (soft voting)
-    rf_proba = rf_model.predict_proba(X_pred)
-    xgb_proba = xgb_model.predict_proba(X_pred)
-    nb_proba = nb_model.predict_proba(X_pred)
-
-    # Combine the predictions by averaging the probabilities (soft voting)
-    avg_proba = (rf_proba + xgb_proba + nb_proba) / 3
-
-    # Final prediction is the class with the highest average probability
-    y_pred = np.argmax(avg_proba, axis=1)
-
-    # Load the true labels from the prediction dataset
-    true_labels = pd.read_csv(pred_filepath)['label'].values
-
-    # Calculate accuracy and display the classification report
-    accuracy = accuracy_score(true_labels, y_pred)
-    print(f"Accuracy: {accuracy:.4f}")
-
-    print("Classification Report:")
-    print(classification_report(true_labels, y_pred))
-
-
-
-# Chatgpt improvement suggestions:
-# The improved accuracy of 69.84% and balanced precision and recall across both classes show that the soft voting ensemble is providing better results than hard voting. Here's a breakdown of what the report suggests:
-# Analysis of Results:
-#
-#     Balanced Precision and Recall:
-#         The model is performing almost equally well for both classes (phishing and legitimate emails), with a good balance between precision and recall for both.
-#         Class 0 (Legitimate Emails): Precision = 0.65, Recall = 0.75
-#         Class 1 (Phishing Emails): Precision = 0.75, Recall = 0.65
-#         This balance shows that the ensemble model is now predicting both phishing and legitimate emails with a good balance between false positives and false negatives.
-#
-#     Overall Accuracy:
-#         With an accuracy of nearly 70%, the ensemble model is providing better generalization than any individual model alone.
-#
-# Further Improvement Suggestions:
-#
-#     Threshold Tuning:
-#         You can experiment with adjusting the decision threshold for phishing emails. By default, the threshold is 0.5, but lowering or raising it might improve recall for phishing without sacrificing too much precision.
-#
-#     Feature Selection:
-#         Consider performing additional feature selection (such as focusing on the top features as indicated by Random Forest's feature importance) to simplify the model and potentially boost performance.
-#
-#     Fine-Tune Hyperparameters:
-#         Further fine-tuning of hyperparameters could slightly improve the performance. You can experiment with a more granular grid search for each model, especially focusing on XGBoost and Random Forest.
-#
-#     Stacking:
-#         If you're looking for further improvement, you could try stacking the models instead of voting. Stacking uses another model (meta-model) to learn from the predictions of your base models, potentially boosting performance.
-#
-# Would you like to try tuning thresholds or experiment with stacking, or are you satisfied with the current performance? Let me know how you'd like to proceed!
+    # Example: Single email prediction from CSV (for frontend use case)
+    single_email_filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\single_tests\single3.csv'
+    #prediction = single_email_prediction_from_csv(single_email_filepath, expected_features, models)
+    #print(f"Single email prediction: {'Phishing' if prediction == 1 else 'Legitimate'}")

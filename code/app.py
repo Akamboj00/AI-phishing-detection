@@ -9,6 +9,7 @@ from flask import Flask, render_template, request, send_file
 from backend.RandomForest import load_and_preprocess_data
 from backend.NaiveBayes import load_and_preprocess_data
 from backend.XGBoost import load_and_preprocess_data
+from backend.ensemble import ensemble_predict, load_models  # You need to create this function
 
 
 app = Flask(__name__)
@@ -28,13 +29,13 @@ def train():
 
 # Define the path for the trained models and vectorizer
 MODEL_PATHS = {
-    'random_forest': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\random_forest_model.pkl',
+    'random_forest': 'backend/trained_models/random_forest.pkl',
 
-    'naive_bayes': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\naive_bayes_model.pkl',
+    'naive_bayes': 'backend/trained_models/naive_bayes_model.pkl',
 
-    'xgboost': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\xgboost_model.pkl'
+    'xgboost': 'backend/trained_models/xgboost_model.pkl'
 }
-VECTORIZER_PATH = 'backend/trained_models/vectorizer.pkl'
+VECTORIZER_PATH = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\vectorizer.pkl'
 
 
 @app.route('/detect', methods=['GET', 'POST'])
@@ -50,51 +51,36 @@ def detect():
             # Save the file in the uploads directory
             eml_file_path = os.path.join(UPLOAD_FOLDER, eml_file.filename)
             eml_file.save(eml_file_path)
+
+            # Parse the email and extract headers/body
             headers, body = parse_eml(eml_file_path)  # Assuming parse_eml is available
-        else:
-            # Use manual entry data
-            headers = {
-                "Sender": request.form.get('sender'),
-                "Subject": request.form.get('subject')
-            }
-            body = request.form.get('email_body')
 
-        if method == 'chatgpt-model':
-            prompt = generate_prompt(headers, body)
-            response = query_llm(prompt)
-            print(f"Raw Model Response: {response}")  # Log the raw response for debugging
+            if method == 'ensemble-model':
+                # Initialize the EmailFeatureExtractor
+                extractor = EmailFeatureExtractor()
 
-            result = extract_label_from_response(response)
-            print(f"Extracted Result: {result}")  # Log the extracted result for verification
-            analysis = response if isinstance(response, str) else response.get('analysis', 'No detailed analysis available.')
+                # Extract features from the uploaded email
+                email_features_df = extractor.process_single_email(eml_file_path, VECTORIZER_PATH)
 
-        # ML Model-based Detection
-        elif method in ['random-forest', 'naive-bayes', 'xgboost'] and eml_file:
-            # Initialize the EmailFeatureExtractor
-            extractor = EmailFeatureExtractor()
+                # Define the expected features (500 features in total)
+                expected_features = [f'term_{i}' for i in range(500)]
 
-            # Process the uploaded email and extract its features using the saved vectorizer
-            email_features_df = extractor.process_single_email(eml_file_path, VECTORIZER_PATH)
+                # Ensure the extracted features match the expected 500 features
+                single_email_features = prepare_features_for_prediction(email_features_df, expected_features)
 
-            # Define the expected features (500 features in total)
-            expected_features = [f'term_{i}' for i in range(500)]
+                #Load Models
+                models = load_models()
 
-            # Ensure the extracted features match the expected 500 features
-            single_email_features = prepare_features_for_prediction(email_features_df, expected_features)
+                # Run the email through the ensemble model for prediction
+                prediction = ensemble_predict(single_email_features, models)  # Call the ensemble function
 
-            # Load the selected ML model
-            model = load_model(MODEL_PATHS[method.replace('-', '_')])
+                # Determine if it's phishing or legitimate based on the prediction
+                if prediction == 1:
+                    result = "Phishing"
+                else:
+                    result = "Legitimate"
 
-            # Make the prediction
-            prediction = predict_single_email(model, single_email_features)
-
-            # Determine if it's phishing or legitimate based on the prediction
-            if prediction[0] == 1:
-                result = "Phishing"
-            else:
-                result = "Legitimate"
-
-            analysis = f"The email was classified as {result}."
+                analysis = f"The email was classified as {result} by the ensemble model."
 
         # Render the results page with the result and detailed analysis
         return render_template('results.html', result=result, analysis=analysis)

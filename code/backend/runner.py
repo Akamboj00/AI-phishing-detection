@@ -1,32 +1,25 @@
-# unified_runner.py
-import pandas as pd
-from RandomForest import load_and_preprocess_data, train_and_evaluate_model as rf_train_and_evaluate_model
-from sklearn.ensemble import RandomForestClassifier
-from NaiveBayes import train_and_evaluate_model as nb_train_and_evaluate_model
-from sklearn.naive_bayes import GaussianNB
-from XGBoost import train_and_evaluate_model as xgb_train_and_evaluate_model
-import xgboost as xgb
+import subprocess
 
-# Define the file path for the dataset
-filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_train\training.csv'
+# Paths to each of your model training scripts
+script_paths = [
+    r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\NaiveBayes.py',
+    r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\SVM.py',
+    r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\XGBoost.py',
+    r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\RandomForest.py',
+    r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\DNN.py'
+]
 
-# Load and preprocess data (shared across all models)
-print("Loading and preprocessing data...")
-X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)
+# Function to run a script and display its output in the console
+def run_script(script_path):
+    try:
+        print(f"\nRunning {script_path}...\n")
+        result = subprocess.run(['python', script_path], capture_output=True, text=True)
+        print(result.stdout)
+        print(f"\nFinished running {script_path}\n")
+    except Exception as e:
+        print(f"Error running {script_path}: {e}")
 
-# RandomForestClassifier
-print("\nRunning RandomForestClassifier...")
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-rf_train_and_evaluate_model(rf_model, X_train, X_test, y_train, y_test, model_path='trained_models/random_forest_model.pkl')
-
-# NaiveBayes
-print("\nRunning NaiveBayes...")
-nb_model = GaussianNB()
-nb_train_and_evaluate_model(nb_model, X_train, X_test, y_train, y_test, model_path='trained_models/naive_bayes_model.pkl')
-
-# XGBoost
-print("\nRunning XGBoost...")
-xgb_model = xgb.XGBClassifier(n_estimators=100, random_state=42)
-xgb_train_and_evaluate_model(xgb_model, X_train, X_test, y_train, y_test, model_path='trained_models/xgboost_model.pkl')
-
-print("\nTraining completed for all models!")
+# Main runner
+if __name__ == "__main__":
+    for script in script_paths:
+        run_script(script)
