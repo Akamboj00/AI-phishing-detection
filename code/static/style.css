@@ -2,20 +2,30 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* Changed to start at the top */
+    min-height: 100vh; /* Ensure full viewport height */
     margin: 0;
     background-color: #f4f4f4;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .container {
     text-align: center;
     width: 100%;
+    max-width: 1200px; /* Limit the width to prevent overflow */
+    padding: 20px; /* Add padding for readability */
+    overflow-y: auto; /* Ensure vertical scrolling if content overflows */
+    box-sizing: border-box; /* Make sure padding is included in the width */
 }
 
-h1 {
+h1, h2, h3 {
     margin-bottom: 30px;
     font-size: 24px;
+}
+
+p {
+    line-height: 1.5;
+    font-size: 16px;
 }
 
 .train-section {

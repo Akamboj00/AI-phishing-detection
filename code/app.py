@@ -106,7 +106,7 @@ def detect():
             ensemble_result = "Phishing" if ensemble_prediction == 1 else "Legitimate"
 
             # Combine results from both models
-            result = f"ChatGPT: {chatgpt_result}, Ensemble: {ensemble_result}"
+            result = f"ChatGPT: {chatgpt_result}\n, Ensemble: {ensemble_result}\n"
             analysis = f"ChatGPT Analysis: {chatgpt_response}\n\nEnsemble Analysis: The email was classified as {ensemble_result}."
 
         # Render the results page with the result and detailed analysis

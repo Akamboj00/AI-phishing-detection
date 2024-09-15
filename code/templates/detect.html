@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phishing Detection</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="home-button">
@@ -16,16 +15,14 @@
         <div class="detection-section">
             <div class="email-info">
                 <h2>Email information</h2>
-                <h3>Manual Email Entry</h3>
-                <!-- Removed form tag -->
                 <label for="sender">Sender</label><br>
-                <input type="text" id="sender" name="sender" placeholder="Placeholder"><br><br>
+                <input type="text" id="sender" name="sender" placeholder="Enter sender"><br><br>
 
                 <label for="subject">Subject</label><br>
-                <input type="text" id="subject" name="subject" placeholder="Placeholder"><br><br>
+                <input type="text" id="subject" name="subject" placeholder="Enter subject"><br><br>
 
                 <label for="email-body">Email Body</label><br>
-                <textarea id="email-body" name="email-body" placeholder="Placeholder"></textarea><br><br>
+                <textarea id="email-body" name="email-body" placeholder="Enter email body"></textarea><br><br>
 
                 <h3>Upload .EML file</h3>
                 <input type="file" id="file-input">
@@ -33,48 +30,41 @@
             <div class="detection-method">
                 <h2>Detection method</h2>
                 <select id="method" name="method">
-                    <option value="both"> Both models combined</option>
+                    <option value="both">Both models combined</option>
                     <option value="chatgpt-model">ChatGPT Model</option>
-                    <option value="ensemble-model">ML Ensemble model (RF, NB, XGB, SVM and DNN)</option>
+                    <option value="ensemble-model">ML Ensemble Model</option>
                 </select><br><br>
                 <button class="btn" onclick="detectPhishing()">Detect</button>
             </div>
         </div>
     </div>
     <script>
-function detectPhishing() {
-    const formData = new FormData();
-    const method = document.getElementById('method').value;
+    function detectPhishing() {
+        const formData = new FormData();
+        const method = document.getElementById('method').value;
+        formData.append('method', method);
 
-    // Add the detection method to the form data
-    formData.append('method', method);
+        const fileInput = document.getElementById('file-input');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.append('eml_file', fileInput.files[0]);
+        } else {
+            formData.append('sender', document.getElementById('sender').value);
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('email_body', document.getElementById('email-body').value);
+        }
 
-    // Check if the user uploaded a file
-    const fileInput = document.getElementById('file-input');
-    if (fileInput && fileInput.files.length > 0) {
-        formData.append('eml_file', fileInput.files[0]);
-    } else {
-        // Add manual entry data if no file was uploaded
-        formData.append('sender', document.getElementById('sender').value);
-        formData.append('subject', document.getElementById('subject').value);
-        formData.append('email_body', document.getElementById('email-body').value);
+        fetch('/detect', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.body.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
-
-    // Submit the form data using fetch and redirect to results page
-    fetch('/detect', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(html => {
-        document.body.innerHTML = html; // Replace the current HTML with the new content
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-</script>
-
-
+    </script>
 </body>
 </html>
