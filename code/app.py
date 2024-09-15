@@ -33,7 +33,9 @@ MODEL_PATHS = {
 
     'naive_bayes': 'backend/trained_models/naive_bayes_model.pkl',
 
-    'xgboost': 'backend/trained_models/xgboost_model.pkl'
+    'xgboost': 'backend/trained_models/xgboost_model.pkl',
+
+    'svm': 'backend/trained_models/svm_model.pkl',
 }
 VECTORIZER_PATH = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\vectorizer.pkl'
 
@@ -53,34 +55,59 @@ def detect():
             eml_file.save(eml_file_path)
 
             # Parse the email and extract headers/body
-            headers, body = parse_eml(eml_file_path)  # Assuming parse_eml is available
+            headers, body = parse_eml(eml_file_path)
+        else:
+            # Use manual entry data
+            headers = {
+                "Sender": request.form.get('sender'),
+                "Subject": request.form.get('subject')
+            }
+            body = request.form.get('email_body')
 
-            if method == 'ensemble-model':
-                # Initialize the EmailFeatureExtractor
-                extractor = EmailFeatureExtractor()
+        # If ChatGPT model is selected
+        if method == 'chatgpt-model':
+            prompt = generate_prompt(headers, body)
+            response = query_llm(prompt)
+            result = extract_label_from_response(response)
+            analysis = response
 
-                # Extract features from the uploaded email
-                email_features_df = extractor.process_single_email(eml_file_path, VECTORIZER_PATH)
+        # If Ensemble model is selected
+        elif method == 'ensemble-model':
+            # Initialize the EmailFeatureExtractor
+            extractor = EmailFeatureExtractor()
+            email_features_df = extractor.process_single_email(eml_file_path, VECTORIZER_PATH)
+            expected_features = [f'term_{i}' for i in range(500)]
+            single_email_features = prepare_features_for_prediction(email_features_df, expected_features)
+            models = load_models()
+            prediction = ensemble_predict(single_email_features, models)
 
-                # Define the expected features (500 features in total)
-                expected_features = [f'term_{i}' for i in range(500)]
+            if prediction == 1:
+                result = "Phishing"
+            else:
+                result = "Legitimate"
 
-                # Ensure the extracted features match the expected 500 features
-                single_email_features = prepare_features_for_prediction(email_features_df, expected_features)
+            analysis = f"The email was classified as {result} by the ensemble model."
 
-                #Load Models
-                models = load_models()
+        # If both models combined is selected
+        elif method == 'both':
+            # Run ChatGPT model
+            prompt = generate_prompt(headers, body)
+            chatgpt_response = query_llm(prompt)
+            chatgpt_result = extract_label_from_response(chatgpt_response)
 
-                # Run the email through the ensemble model for prediction
-                prediction = ensemble_predict(single_email_features, models)  # Call the ensemble function
+            # Run Ensemble model
+            extractor = EmailFeatureExtractor()
+            email_features_df = extractor.process_single_email(eml_file_path, VECTORIZER_PATH)
+            expected_features = [f'term_{i}' for i in range(500)]
+            single_email_features = prepare_features_for_prediction(email_features_df, expected_features)
+            models = load_models()
+            ensemble_prediction = ensemble_predict(single_email_features, models)
 
-                # Determine if it's phishing or legitimate based on the prediction
-                if prediction == 1:
-                    result = "Phishing"
-                else:
-                    result = "Legitimate"
+            ensemble_result = "Phishing" if ensemble_prediction == 1 else "Legitimate"
 
-                analysis = f"The email was classified as {result} by the ensemble model."
+            # Combine results from both models
+            result = f"ChatGPT: {chatgpt_result}, Ensemble: {ensemble_result}"
+            analysis = f"ChatGPT Analysis: {chatgpt_response}\n\nEnsemble Analysis: The email was classified as {ensemble_result}."
 
         # Render the results page with the result and detailed analysis
         return render_template('results.html', result=result, analysis=analysis)
