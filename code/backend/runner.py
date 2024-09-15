@@ -8,7 +8,7 @@ from XGBoost import train_and_evaluate_model as xgb_train_and_evaluate_model
 import xgboost as xgb
 
 # Define the file path for the dataset
-filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\AI_and_legit.csv'
+filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_train\training.csv'
 
 # Load and preprocess data (shared across all models)
 print("Loading and preprocessing data...")

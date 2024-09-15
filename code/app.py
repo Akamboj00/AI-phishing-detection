@@ -28,9 +28,11 @@ def train():
 
 # Define the path for the trained models and vectorizer
 MODEL_PATHS = {
-    'random_forest': 'backend/trained_models/random_forest_model.pkl',
-    'naive_bayes': 'backend/trained_models/naive_bayes_model.pkl',
-    'xgboost': 'backend/trained_models/xgboost_model.pkl'
+    'random_forest': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\random_forest_model.pkl',
+
+    'naive_bayes': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\naive_bayes_model.pkl',
+
+    'xgboost': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\xgboost_model.pkl'
 }
 VECTORIZER_PATH = 'backend/trained_models/vectorizer.pkl'
 
@@ -174,9 +176,6 @@ def metrics():
             plot_feature_importance(model, [f'term_{i}' for i in range(X_train.shape[1])], model_name)
 
     return render_template('metrics.html', metrics=metrics)
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
