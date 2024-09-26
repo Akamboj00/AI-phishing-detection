@@ -29,13 +29,13 @@ def train():
 
 # Define the path for the trained models and vectorizer
 MODEL_PATHS = {
-    'random_forest': 'backend/trained_models/random_forest.pkl',
+    'random_forest': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\random_forest_model.pkl',
 
-    'naive_bayes': 'backend/trained_models/naive_bayes_model.pkl',
+    'naive_bayes': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\naive_bayes_model.pkl',
 
-    'xgboost': 'backend/trained_models/xgboost_model.pkl',
+    'xgboost': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\xgboost_model.pkl',
 
-    'svm': 'backend/trained_models/svm_model.pkl',
+    'svm': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\svm_model.pkl',
 }
 VECTORIZER_PATH = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\vectorizer.pkl'
 
@@ -131,7 +131,14 @@ def plot_confusion_matrix(y_true, y_pred, model_name):
     plt.close()
 
 def plot_roc_curve(y_true, y_proba, model_name):
-    fpr, tpr, _ = roc_curve(y_true, y_proba[:, 1])  # Assuming class 1 is "phishing"
+    # Check if y_proba is 1D (some models might only return probability for the positive class)
+    if y_proba.ndim == 1:
+        # Assuming this is the probability for the positive class (phishing)
+        fpr, tpr, _ = roc_curve(y_true, y_proba)
+    else:
+        # Assuming the second column represents the probability of the positive class (phishing)
+        fpr, tpr, _ = roc_curve(y_true, y_proba[:, 1])
+
     roc_auc = auc(fpr, tpr)
     plt.figure(figsize=(5, 4))  # Set smaller size for ROC curve
     plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (area = {roc_auc:.2f})')
@@ -156,20 +163,29 @@ def plot_feature_importance(model, feature_names, model_name):
     plt.savefig(os.path.join(CHARTS_FOLDER, f'feature_importance_{model_name}.png'))
     plt.close()
 
+
 @app.route('/metrics')
 def metrics():
-    # Assuming you have a shared load_and_preprocess_data method
-    filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\output\AI_and_legit.csv'
-    X_train, X_test, y_train, y_test = load_and_preprocess_data(filepath)
+    # Load the dataset for individual models
+    training_filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_train\training.csv'
+    X_train, X_test, y_train, y_test = load_and_preprocess_data(training_filepath)
 
-    # Load models and generate metrics & visualizations
+    # Load the dataset for the ensemble model
+    predictions_filepath = r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\data\final_testing\AI_legit_phish_pred\predictions.csv'
+    X_ens_train, X_ens_test, y_ens_train, y_ens_test = load_and_preprocess_data(predictions_filepath)
+
+    # Load individual model paths
     model_paths = {
-        'random_forest': 'backend/trained_models/random_forest_model.pkl',
-        'naive_bayes': 'backend/trained_models/naive_bayes_model.pkl',
-        'xgboost': 'backend/trained_models/xgboost_model.pkl'
+        'random_forest': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\random_forest_model.pkl',
+        'naive_bayes': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\naive_bayes_model.pkl',
+        'xgboost': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\xgboost_model.pkl',
+        'svm': r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\svm_model.pkl',
     }
 
+    # Dictionary to store metrics
     metrics = {}
+
+    # Generate metrics and visualizations for individual models
     for model_name, model_path in model_paths.items():
         model = load_model(model_path)
         y_pred = model.predict(X_test)
@@ -187,6 +203,41 @@ def metrics():
         # Feature Importance (for models that support it)
         if hasattr(model, 'feature_importances_'):
             plot_feature_importance(model, [f'term_{i}' for i in range(X_train.shape[1])], model_name)
+
+    # Generate metrics for the ensemble model using the predictions_filepath dataset
+    models = load_models()  # Load models needed for the ensemble
+    y_pred_ensemble = ensemble_predict(X_ens_test, models)
+    report_ensemble = classification_report(y_ens_test, y_pred_ensemble, output_dict=True)
+    metrics['ensemble'] = report_ensemble
+
+    # Confusion Matrix for the ensemble model
+    plot_confusion_matrix(y_ens_test, y_pred_ensemble, 'ensemble')
+
+    # ROC curve for the ensemble model
+    plot_roc_curve(y_ens_test, y_pred_ensemble, 'ensemble')
+
+    # Hardcoded ChatGPT model metrics (from results.json)
+    chatgpt_metrics = {
+        "accuracy": 1.00,
+        "precision": 1.00,
+        "recall": 1.00,
+        "f1-score": 1.00
+    }
+    metrics['chatgpt'] = {
+        'accuracy': chatgpt_metrics['accuracy'],
+        '0': {
+            'precision': chatgpt_metrics['precision'],
+            'recall': chatgpt_metrics['recall'],
+            'f1-score': chatgpt_metrics['f1-score'],
+            'support': 260
+        },
+        '1': {
+            'precision': chatgpt_metrics['precision'],
+            'recall': chatgpt_metrics['recall'],
+            'f1-score': chatgpt_metrics['f1-score'],
+            'support': 296
+        }
+    }
 
     return render_template('metrics.html', metrics=metrics)
 

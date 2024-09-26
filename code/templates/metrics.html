@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Metrics</title>
+    <title>Model Performance Metrics</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
@@ -15,10 +15,10 @@
         }
 
         .container {
-            max-width: 1200px; /* Restrict maximum width */
+            max-width: 2000px;
             margin: 0 auto;
             padding: 20px;
-            text-align: center; /* Center the content */
+            text-align: center;
         }
 
         h1 {
@@ -34,11 +34,29 @@
             text-transform: capitalize;
         }
 
-        .metrics-grid {
+        .phase-section {
+            margin-bottom: 50px;
+        }
+
+        .phase-title {
+            font-size: 26px;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        .metrics-grid-training {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns for each model */
+            grid-template-columns: repeat(2, 1fr); /* 2 columns for training phase */
             grid-gap: 20px;
-            justify-items: center; /* Center each grid item */
+            justify-items: center;
+            justify-content: center;
+        }
+
+        .metrics-grid-evaluation {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns for evaluation phase */
+            grid-gap: 20px;
+            justify-items: center;
             justify-content: center;
         }
 
@@ -47,14 +65,14 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 750px; /* Restrict the width of each model section */
+            max-width: 750px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            font-size: 14px; /* Make the font smaller */
+            font-size: 14px;
         }
 
         table, th, td {
@@ -81,8 +99,8 @@
         }
 
         .charts-section img {
-            width: 90%;  /* Adjust width for better scaling */
-            max-width: 300px; /* Set maximum width to prevent large images */
+            width: 90%;
+            max-width: 300px;
             height: auto;
             margin-bottom: 10px;
         }
@@ -107,51 +125,110 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Model Performance Metrics</h1>
 
-        <div class="metrics-grid">
-            {% for model, report in metrics.items() %}
-            <div class="model-section">
-                <h2>{{ model|capitalize }}</h2>
-                <table>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Precision</th>
-                        <th>Recall</th>
-                        <th>F1-score</th>
-                        <th>Support</th>
-                    </tr>
-                    {% for label, data in report.items() if label in ['0', '1'] %}
-                    <tr>
-                        <td>{{ label }}</td>
-                        <td>{{ data['precision'] }}</td>
-                        <td>{{ data['recall'] }}</td>
-                        <td>{{ data['f1-score'] }}</td>
-                        <td>{{ data['support'] }}</td>
-                    </tr>
-                    {% endfor %}
-                    <tr class="accuracy-row">
-                        <td>Accuracy</td>
-                        <td colspan="4">{{ report['accuracy'] }}</td>
-                    </tr>
-                </table>
-
-                <!-- Embed the generated charts -->
-                <div class="charts-section">
-                    <img src="{{ url_for('static', filename='confusion_matrix_{}.png'.format(model)) }}" alt="Confusion Matrix for {{ model }}">
-                    <img src="{{ url_for('static', filename='roc_curve_{}.png'.format(model)) }}" alt="ROC Curve for {{ model }}">
-                    {% if model == 'random_forest' or model == 'xgboost' %}
-                    <img src="{{ url_for('static', filename='feature_importance_{}.png'.format(model)) }}" alt="Feature Importance for {{ model }}">
-                    {% endif %}
+        <!-- Training Phase Section -->
+        <div class="phase-section">
+            <h2 class="phase-title">Training Results</h2>
+            <div class="metrics-grid-training">
+                {% for model, report in metrics.items() if model in ['random_forest', 'naive_bayes', 'xgboost', 'svm'] %}
+                {% if report is not none and report.items()|length > 0 %}
+                <div class="model-section">
+                    <h2>{{ model|capitalize }}</h2>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-score</th>
+                            <th>Support</th>
+                        </tr>
+                        {% for label, data in report.items() if label in ['0', '1'] %}
+                        <tr>
+                            <td>{{ label }}</td>
+                            <td>{{ data['precision'] }}</td>
+                            <td>{{ data['recall'] }}</td>
+                            <td>{{ data['f1-score'] }}</td>
+                            <td>{{ data['support'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="accuracy-row">
+                            <td>Accuracy</td>
+                            <td colspan="4">{{ report['accuracy'] }}</td>
+                        </tr>
+                    </table>
+                    <div class="charts-section">
+                        <img src="{{ url_for('static', filename='confusion_matrix_{}.png'.format(model)) }}" alt="Confusion Matrix for {{ model }}">
+                        <img src="{{ url_for('static', filename='roc_curve_{}.png'.format(model)) }}" alt="ROC Curve for {{ model }}">
+                        {% if model == 'random_forest' or model == 'xgboost' %}
+                        <img src="{{ url_for('static', filename='feature_importance_{}.png'.format(model)) }}" alt="Feature Importance for {{ model }}">
+                        {% endif %}
+                    </div>
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
+        </div>
+
+        <!-- Evaluation Phase Section -->
+        <div class="phase-section">
+            <h2 class="phase-title">Evaluation Results</h2>
+            <div class="metrics-grid-evaluation">
+                {% for model, report in metrics.items() if model in ['ensemble', 'chatgpt'] %}
+                {% if report is not none and report.items()|length > 0 %}
+                <div class="model-section">
+                    <h2>{{ model|capitalize }}</h2>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-score</th>
+                            <th>Support</th>
+                        </tr>
+                        {% for label, data in report.items() if label in ['0', '1'] %}
+                        <tr>
+                            <td>{{ label }}</td>
+                            <td>{{ data['precision'] }}</td>
+                            <td>{{ data['recall'] }}</td>
+                            <td>{{ data['f1-score'] }}</td>
+                            <td>{{ data['support'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="accuracy-row">
+                            <td>Accuracy</td>
+                            <td colspan="4">{{ report['accuracy'] }}</td>
+                        </tr>
+                    </table>
+                    <div class="charts-section">
+                        {% if model != 'chatgpt' %}
+                        <img src="{{ url_for('static', filename='confusion_matrix_{}.png'.format(model)) }}" alt="Confusion Matrix for {{ model }}">
+                        <img src="{{ url_for('static', filename='roc_curve_{}.png'.format(model)) }}" alt="ROC Curve for {{ model }}">
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- New Download Section -->
+        <div class="phase-section">
+            <h2 class="phase-title">Download Files</h2>
+            <p>Click the links below to download the datasets used and the result file for ChatGPT metrics.</p>
+            <ul>
+                <li><a href="{{ url_for('static', filename='downloads/training.csv') }}" download>Download TF-IDF Dataset used in training phase (CSV)</a></li>
+                <li><a href="{{ url_for('static', filename='downloads/predictions.csv') }}" download>Download TF-IDF Dataset used in evaluation phase (CSV)</a></li>
+                <li><a href="{{ url_for('static', filename='downloads/results.json') }}" download>Download ChatGPT Results (JSON)</a></li>
+            </ul>
         </div>
 
         <div class="back-button">
             <a href="/">Back to Home</a>
         </div>
     </div>
+
 </body>
 </html>
