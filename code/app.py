@@ -9,7 +9,8 @@ from flask import Flask, render_template, request, send_file
 from backend.RandomForest import load_and_preprocess_data
 from backend.NaiveBayes import load_and_preprocess_data
 from backend.XGBoost import load_and_preprocess_data
-from backend.ensemble import ensemble_predict, load_models  # You need to create this function
+from backend.ensemble import load_models, ensemble_predict, load_and_preprocess_data
+
 
 
 app = Flask(__name__)

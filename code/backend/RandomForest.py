@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Print the best hyperparameters
     print(f"Best Hyperparameters: {grid_search.best_params_}")
 
-    # Use the best model to make predictions
+    # Use the best model to train and make predictions
     best_rf_model = grid_search.best_estimator_
     y_pred = best_rf_model.predict(X_test)
 

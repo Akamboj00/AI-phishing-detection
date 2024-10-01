@@ -24,16 +24,16 @@ if __name__ == "__main__":
     # Initialize Naive Bayes model
     nb_model = GaussianNB()
 
-    # Cross-validation to check the consistency of model performance
-    scores = cross_val_score(nb_model, X_train, y_train, cv=5, scoring='accuracy')
-    print(f"Cross-validation accuracy scores: {scores}")
-    print(f"Mean cross-validation accuracy: {scores.mean()}")
-
     # Train the model
     nb_model.fit(X_train, y_train)
 
     # Make predictions
     y_pred = nb_model.predict(X_test)
+
+    # Cross-validation to check the consistency of model performance
+    scores = cross_val_score(nb_model, X_train, y_train, cv=5, scoring='accuracy')
+    print(f"Cross-validation accuracy scores: {scores}")
+    print(f"Mean cross-validation accuracy: {scores.mean()}")
 
     # Evaluate the model
     accuracy = accuracy_score(y_test, y_pred)

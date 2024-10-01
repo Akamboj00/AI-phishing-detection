@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.metrics import accuracy_score, classification_report
-from SVM import load_and_preprocess_data
+from sklearn.model_selection import train_test_split
 
 
 # Function to load all models once and reuse them
@@ -13,6 +13,16 @@ def load_models():
     svm_model = joblib.load(r'C:\Users\Abhi\OneDrive - City, University of London\Cyber Security MSc\Main\Project\03 Software\Code\AI-phishing-detection\code\backend\trained_models\svm_model.pkl')
     return rf_model, xgb_model, nb_model, svm_model
 
+
+# Load and preprocess the data
+def load_and_preprocess_data(filepath):
+    df = pd.read_csv(filepath)
+    df = df.drop_duplicates()
+
+    # Use the existing TF-IDF feature columns directly
+    X = df.drop('label', axis=1).values
+    y = df['label'].values
+    return train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Helper function to process data for predictions (used for both single and batch)
 def prepare_features(single_or_batch_data, expected_features):
@@ -91,7 +101,7 @@ def batch_prediction(filepath, expected_features, models):
 
 
 
-# Single email prediction function f    or frontend (now from CSV)
+# Single email prediction function for frontend (now from CSV)
 def single_email_prediction_from_csv(csv_filepath, expected_features, models):
     # Load the features for a single email from a CSV file
     df = pd.read_csv(csv_filepath)
