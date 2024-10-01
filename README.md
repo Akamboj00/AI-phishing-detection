@@ -14,7 +14,7 @@ AI-Phishing-Detection/<br>
 ├── Code/ # All code files <br>
 &nbsp;&nbsp;&nbsp;&nbsp;├── app/ # Frontend<br>
 &nbsp;&nbsp;&nbsp;&nbsp;├── backend/ # Backend scripts and modules<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── data/ # Datasets <br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── output/ # Output files from scripts and models<br>
+├── data/ # Datasets <br>
+└── output/ # Output files from scripts and models<br>
 
 
