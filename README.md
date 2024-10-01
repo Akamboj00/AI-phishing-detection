@@ -20,7 +20,7 @@ AI-Phishing-Detection/<br>
 └── output/ # Output files from scripts and models<br>
 
 
-How to Run the Application
+<h3>How to Run the Application<br>
 The easiest way to run the application is:
 -	Clone the GitHub repository:
 -	Run the application:
