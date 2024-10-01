@@ -12,8 +12,10 @@ The project is organized as follows:
 AI-Phishing-Detection/<br>
 │<br>
 ├── Code/ # All code files <br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── app/ # Frontend<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├── backend/ # Backend scripts and modules<br>
+&nbsp;&nbsp;&nbsp;&nbsp;── app/ # Frontend<br>
+&nbsp;&nbsp;&nbsp;&nbsp;── backend/ # Backend scripts and modules<br>
+&nbsp;&nbsp;&nbsp;&nbsp;── static/ # graphs and static files(images etc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;── templates/ # html templates<br>
 ├── data/ # Datasets <br>
 └── output/ # Output files from scripts and models<br>
 
