@@ -23,8 +23,7 @@ AI-Phishing-Detection/<br>
 <h3>How to Run the Application</h3><br><br>
 The easiest way to run the application is:<br>
 -	Clone the GitHub repository:<br>
--	Run the application:<br>
-o	python app.py<br><br>
+-	Run the app.py 
 Open a browser and go to localhost:5000 to start using the application.<br>
 <br><br>
 The backend scripts (e.g., RandomForest.py, NaiveBayes.py etc.) can also be run individually, but they require a valid dataset to be routed to the script; otherwise, nothing will happen. Running these scripts individually is only necessary for testing batch processing or similar tasks. For real-time detection, running app.py is sufficient.<br><br>
