@@ -1,8 +1,6 @@
 # AI-Phishing-Detection
 ## Master's Project
 
-**Status:** 🚧 Still in development
-
 ### Introduction
 Welcome to the AI-Phishing-Detection repository. This project is part of a Master's thesis and focuses on the development of an application that uses advanced machine learning and large language model (LLM) techniques to detect phishing attacks. Our goal is to provide a robust tool to enhance cybersecurity measures against phishing.
 
