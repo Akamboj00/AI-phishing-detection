@@ -10,23 +10,23 @@ Welcome to the AI-Phishing-Detection repository. This project is part of a Maste
 The project is organized as follows:
 
 AI-Phishing-Detection/<br>
-•	Feature_extraction.py – Handles data preprocessing and feature extraction.
-•	RandomForest.py – Implements the Random Forest model.
-•	NaïveBayes.py – Implements the Naive Bayes model.
-•	SVM.py – Implements the Support Vector Machine model.
-•	XGBoost.py – Implements the XGBoost model.
-•	Ensemble.py – Combines individual models into an ensemble.
-•	ChatGPT.py – Integrates the ChatGPT API for phishing detection.
-•	app.py – Main application logic and routing for the web tool.
-•	Detect.html – Frontend interface for detecting phishing emails.
-•	Metrics.html – Displays model metrics.
-•	Results.html – Presents detection results.
-•	Train.html – Interface for model training.
-•	MetricsForReport.py – Script for generating model performance metrics for the report.
+•	Feature_extraction.py – Handles data preprocessing and feature extraction.<br>
+•	RandomForest.py – Implements the Random Forest model.<br>
+•	NaïveBayes.py – Implements the Naive Bayes model.<br>
+•	SVM.py – Implements the Support Vector Machine model.<br>
+•	XGBoost.py – Implements the XGBoost model.<br>
+•	Ensemble.py – Combines individual models into an ensemble.<br>
+•	ChatGPT.py – Integrates the ChatGPT API for phishing detection.<br>
+•	app.py – Main application logic and routing for the web tool.<br>
+•	Detect.html – Frontend interface for detecting phishing emails.<br>
+•	Metrics.html – Displays model metrics.<br>
+•	Results.html – Presents detection results.<br>
+•	Train.html – Interface for model training.<br>
+•	MetricsForReport.py – Script for generating model performance metrics for the report.<br>
 
 
 
-<h3>How to Run the Application</h3><br><br>
+<h3>How to Run the Application</h3><br>
 The easiest way to run the application is:<br>
 -	Clone the GitHub repository:<br>
 -	Run the app.py 
